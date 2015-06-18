@@ -5,6 +5,8 @@ var parser = require("body-parser");
 
 var router = require("./routes.js");
 
+var db = require('./db/config');
+
 var app = express();
 module.exports.app = app;
 
