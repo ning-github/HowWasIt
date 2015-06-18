@@ -6,8 +6,8 @@ var knex = require('knex')({
   client: 'mysql',
   connection: {
     host: '127.0.0.1',
-    user: 'user',
-    password: 'password',
+    user: 'root',
+    password: '',
     database: 'howWasIt',
     charset: 'utf8',
     filename: path.join(__dirname, './howWasIt.sql')
@@ -36,7 +36,7 @@ db.knex.schema.hasTable('reviews').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('reviews', function (review) {
       review.increments('id').primary();
-      review.integer('user_id', 20).references('users.id');
+      review.integer('user_id', 10).unsigned().references('users.id');
       review.string('review_text', 255);
       review.integer('up_votes', 10);
       review.integer('google_loc_id', 30);
@@ -52,8 +52,8 @@ db.knex.schema.hasTable('reviews').then(function(exists) {
 db.knex.schema.hasTable('user_connections').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('user_connections', function (user_connection) {
-      user_connection.integer('user_id').references('users.id');
-      user_connection.integer('friend_user_id').references('users.id');
+      user_connection.integer('user_id').unsigned().references('users.id');
+      user_connection.integer('friend_user_id').unsigned().references('users.id');
       user_connection.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
