@@ -1,6 +1,5 @@
 var Bookshelf = require('bookshelf');
 var knex = require('knex');
-var path = require('path');
 
 var knex = require('knex')({
   client: 'mysql',
@@ -10,7 +9,6 @@ var knex = require('knex')({
     password: '',
     database: 'howWasIt',
     charset: 'utf8',
-    filename: path.join(__dirname, './howWasIt.sql')
   }
 });
 
