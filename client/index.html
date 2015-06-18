@@ -3,8 +3,8 @@
     <head>
       <meta charset="utf-8"/>
       <title>HowWasIt</title>
-      <link rel="stylesheet" type="text/css" href="client/styles/style.css"/>
       <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+      <link rel="stylesheet" type="text/css" href="styles/style.css"/>
       <script src="bower_components/jquery/jquery.min.js"></script>
       <script src="bower_components/angular/angular.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -12,11 +12,26 @@
     </head>
 
     <body class="container">
-      <div class="headerRow">
-        <div class="col-md-4 review-box">Add Review</div>
-        <div class="col-md-4 page-title">HowWasIt</div>
-        <div class="col-md-4 searchbox">Search</div>
+      <nav class=" navbar navbar-default">
+      <div class="navbar-header">
+        <div class="col-md-4" class="reviewBox" class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Add Review
+            <span class="caret"></span>
+          </button>
+            <form class="dropdown-menu">
+              Location: <input type="text" name="location"><br>
+              Review: <input type="text" name="review"><br>
+              <input type="submit" value="Submit">
+            </form>
+
+          <div class="col-md-4" class="page-title">HowWasIt</div>
+          <div class="search-box">
+            <form class="navbar-form navbar-left" role="search">
+              <input type="text" class="form-control" placeholder="Search">
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
       </div>
+      </nav>
       <div class="main">
         <div class="col-md-8 map">Map</div>
         <div class="col-md-4 sidebar">
