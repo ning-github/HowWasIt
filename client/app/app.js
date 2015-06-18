@@ -1,1 +1,4 @@
-angular.module();
+angular.module("howWasIt", ["ui-router"])
+
+
+;
