@@ -49,6 +49,7 @@ angular.module('howWasIt.friends', [])
   $scope.addFriend = function(userObj) {
     return $http({
       method: 'POST',
+      // We will need to add a reference to a session name? cookie? something to id the user.
       url: '/friends/addFriend',
       data: userObj
     })
@@ -56,6 +57,19 @@ angular.module('howWasIt.friends', [])
       console.log(resp);
     });
   };
+
+  $scope.removeFriend = function(userObj) {
+    return $http({
+      method: 'POST',
+      // We will need to add a reference to a session name? cookie? something to id the user.
+      url: '/friends/removeFriend',
+      data: userObj
+    })
+    .then(function(resp) {
+      console.log(resp);
+    });
+  };
+
 
 
   $scope.getFriendList();
