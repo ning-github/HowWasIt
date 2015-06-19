@@ -60,8 +60,9 @@
 
                 <ul class="search-members-results">
                   <li ng-repeat="member in searchMembersResults">
-                    <div class:"member-name">{{ member.first_name }} {{ member.last_name }}</div>
-                    <div class:"member-email">{{ member.email }}</div>
+                    <div class="member-name">{{ member.first_name }} {{ member.last_name }}</div>
+                    <div class="member-email">{{ member.email }}</div>
+                    <button ng-click="addFriend(member)">Add Friend</button>
                   </li>
                 </ul>
 
@@ -71,8 +72,8 @@
             <!-- Friends List -->
             <ul class="friends-list">
               <li ng-repeat="friend in userFriends | filter: friendsFilterForm">
-                <div class:"friend-name">{{ friend.first_name }} {{ friend.last_name }}</div>
-                <div class:"friend-email">{{ friend.email }}</div>
+                <div class="friend-name">{{ friend.first_name }} {{ friend.last_name }}</div>
+                <div class="friend-email">{{ friend.email }}</div>
               </li>
             </ul>
 

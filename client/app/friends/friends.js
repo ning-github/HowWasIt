@@ -17,7 +17,7 @@ angular.module('howWasIt.friends', [])
      password: 'qqqq'},
   ];
 
-  $scope.searchMembersResults = [];
+  $scope.searchMembersResults = [{id: 3, username: 'ningxia', first_name: 'ning', last_name: 'xia'}];
 
   $scope.getFriendList = function() {
     return $http({
@@ -46,7 +46,21 @@ angular.module('howWasIt.friends', [])
     });
   };
 
+  $scope.addFriend = function(userObj) {
+    return $http({
+      method: 'POST',
+      url: '/friends/addFriend',
+      data: userObj
+    })
+    .then(function(resp) {
+      console.log(resp);
+    });
+  };
 
 
   $scope.getFriendList();
 });
+
+
+
+
