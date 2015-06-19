@@ -37,7 +37,7 @@ angular.module('howWasIt.friends', [])
   $scope.searchMembers = function(query) {
     return $http({
       method: 'GET',
-      url: '/friends/memberSearch?query=' + query
+      url: '/friends/searchMembers?query=' + query
     })
     .then(function(resp) {
       // Expect resp.users to be an array of user objects
