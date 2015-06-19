@@ -71,7 +71,7 @@
             
             <!-- Friends List -->
             <ul class="friends-list">
-              <li ng-repeat="friend in userFriends | filter: friendsFilterForm">
+              <li ng-repeat="friend in userFriends | filter: friendsFilterForm" ng-click="mapUserComments(friend)">
                 <div class="friend-name">{{ friend.first_name }} {{ friend.last_name }}</div>
                 <div class="friend-email">{{ friend.email }}</div>
                 <button ng-click="removeFriend(friend)">Remove Friend</button>

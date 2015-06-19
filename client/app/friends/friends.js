@@ -22,7 +22,7 @@ angular.module('howWasIt.friends', [])
   $scope.getFriendList = function() {
     return $http({
       method: 'GET',
-      // We will need to add a reference to a session name? cookie? something to id the user.
+      // TODO: We will need to add a reference to a session name? cookie? something to id the user.
       url: '/friends/getFriendList'
     })
     .then(function(resp) {
@@ -49,7 +49,7 @@ angular.module('howWasIt.friends', [])
   $scope.addFriend = function(userObj) {
     return $http({
       method: 'POST',
-      // We will need to add a reference to a session name? cookie? something to id the user.
+      // TODO: We will need to add a reference to a session name? cookie? something to id the user.
       url: '/friends/addFriend',
       data: userObj
     })
@@ -61,13 +61,19 @@ angular.module('howWasIt.friends', [])
   $scope.removeFriend = function(userObj) {
     return $http({
       method: 'POST',
-      // We will need to add a reference to a session name? cookie? something to id the user.
+      // TODO: We will need to add a reference to a session name? cookie? something to id the user.
       url: '/friends/removeFriend',
       data: userObj
     })
     .then(function(resp) {
       console.log(resp);
     });
+  };
+
+  $scope.mapUserComments = function(userObj) {
+    // TODO: Add function to show just friend's comments on the map
+    // TODO: Fix bug so map doesn't show user's comments on 'remove friend' button click
+    console.log(userObj);
   };
 
 
