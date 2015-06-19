@@ -2,7 +2,7 @@ var db = require('../db/config');
 var bluebird = require('bluebird');
 var url = require('url');
 
-var User_Connection = require('../db/models/userConnection');
+var UserConnection = require('../db/models/userConnection');
 
 module.exports = {
 
@@ -50,7 +50,7 @@ module.exports = {
       var userId = url.parse(req.url).query.split('=')[1]; // url format: /friends/getFriendList?user_id=123
       var friendId = req.body.id;
 
-      new User_Connection({user_id: userId, friend_user_id: friendId})
+      new UserConnection({user_id: userId, friend_user_id: friendId})
       .fetch().then(function(found) {
         if (found) {
           res.status(200).send('User already is your friend!');
