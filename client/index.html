@@ -42,11 +42,17 @@
           <!-- Friends Module -->
           <div class="col-md-4 friends" ng-controller="FriendsController">
             <h3>Friends</h3>
+
+            <div class='friends-search'>
+              <form>
+                <input type="text" name="query" ng-model="search">
+              </form>
+            </div>
             
             <div class='friends-list'>
-              <div ng-repeat='friend in userFriends'>
-                <div class:'name'>{{ friend.first_name }} {{ friend.last_name }}</div>
-                <div class:'email'>{{ friend.email }}</div>
+              <div ng-repeat='friend in userFriends | filter: search'>
+                <div class:'friend-name'>{{ friend.first_name }} {{ friend.last_name }}</div>
+                <div class:'friend-email'>{{ friend.email }}</div>
               </div>
             </div>
 
