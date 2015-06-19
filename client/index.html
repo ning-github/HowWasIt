@@ -10,6 +10,7 @@
       <script src="bower_components/angular/angular.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
       <script src="app/app.js"></script>
+      <script src="app/friends/friends.js"></script>
     </head>
 
     <body class="container">
@@ -37,7 +38,49 @@
         <div class="col-md-8 map">Map</div>
         <div class="col-md-4 sidebar">
           <div class="col-md-4 top-five">TopFive</div>
-          <div class="col-md-4 friends">Friends</div>
+
+          <!-- Friends Module -->
+          <div class="col-md-4 friends" ng-controller="FriendsController">
+            <h3>Friends</h3>
+
+            <!-- Friends Filter -->
+            <div>
+              <span>Search your friends</span>
+              <form>
+                <input type="text" name="friendsFilter" ng-model="friendsFilterForm">
+              </form>
+            </div>
+
+            <!-- Member Search -->
+            <div>
+              <span>Find a user</span>
+              <form>
+                <input type="text" name="memberSearch" ng-model="memberSearchForm">
+                <input type="submit" ng-click="searchMembers(memberSearchForm)">
+
+                <ul class="search-members-results">
+                  <li ng-repeat="member in searchMembersResults">
+                    <div class="member-name">{{ member.first_name }} {{ member.last_name }}</div>
+                    <div class="member-email">{{ member.email }}</div>
+                    <button ng-click="addFriend(member)">Add Friend</button>
+                  </li>
+                </ul>
+
+              </form>
+            </div>
+            
+            <!-- Friends List -->
+            <ul class="friends-list">
+              <li ng-repeat="friend in userFriends | filter: friendsFilterForm" ng-click="mapUserComments(friend)">
+                <div class="friend-name">{{ friend.first_name }} {{ friend.last_name }}</div>
+                <div class="friend-email">{{ friend.email }}</div>
+                <button ng-click="removeFriend(friend)">Remove Friend</button>
+              </li>
+            </ul>
+
+          </div>
+
+
         </div>
       </div>
     </body>
