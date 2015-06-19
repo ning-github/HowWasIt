@@ -17,11 +17,13 @@ angular.module('howWasIt.friends', [])
      password: 'qqqq'},
   ];
 
+  $scope.searchMembersResults = [];
+
   $scope.getFriendList = function() {
     return $http({
       method: 'GET',
       // We will need to add a reference to a session name? cookie? something to id the user.
-      url: '/getFriendList'
+      url: '/friends/getFriendList'
     })
     .then(function(resp) {
       // Expect resp.users to be an array of user objects
@@ -29,7 +31,19 @@ angular.module('howWasIt.friends', [])
         $scope.userFriends.push(user);
       });
     });
+  };
 
+  $scope.searchMembers = function(query) {
+    return $http({
+      method: 'GET',
+      url: '/friends/memberSearch'
+    })
+    .then(function(resp) {
+      // Expect resp.users to be an array of user objects
+      resp.users.forEach(function(user) {
+        $scope.searchMembersResults.push(user);
+      });
+    });
   };
 
 

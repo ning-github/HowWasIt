@@ -43,6 +43,7 @@
           <div class="col-md-4 friends" ng-controller="FriendsController">
             <h3>Friends</h3>
 
+            <!-- Friends Filter -->
             <div>
               <span>Search your friends</span>
               <form>
@@ -50,14 +51,24 @@
               </form>
             </div>
 
+            <!-- Member Search -->
             <div>
               <span>Find a user</span>
               <form>
                 <input type="text" name="memberSearch" ng-model="memberSearchForm">
                 <input type="submit" ng-click="searchMembers(memberSearchForm)">
+
+                <ul class="search-members-results">
+                  <li ng-repeat="member in searchMembersResults">
+                    <div class:"member-name">{{ member.first_name }} {{ member.last_name }}</div>
+                    <div class:"member-email">{{ member.email }}</div>
+                  </li>
+                </ul>
+
               </form>
             </div>
             
+            <!-- Friends List -->
             <ul class="friends-list">
               <li ng-repeat="friend in userFriends | filter: friendsFilterForm">
                 <div class:"friend-name">{{ friend.first_name }} {{ friend.last_name }}</div>
