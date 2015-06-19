@@ -3,6 +3,7 @@ var bluebird = require('bluebird');
 var url = require('url');
 
 var UserConnection = require('../db/models/userConnection');
+var UserConnections = require('../db/collections/userConnections');
 
 module.exports = {
 
@@ -50,13 +51,16 @@ module.exports = {
       var userId = url.parse(req.url).query.split('=')[1]; // url format: /friends/getFriendList?user_id=123
       var friendId = req.body.id;
 
-      new UserConnection({user_id: userId, friend_user_id: friendId})
-      .fetch().then(function(found) {
+      var newConnection = new UserConnection({user_id: userId, friend_user_id: friendId});
+      newConnection.fetch().then(function(found) {
         if (found) {
           res.status(200).send('User already is your friend!');
         } else {
-          console.log('FOUND IS THIS: ', found);
-
+          newConnection.save().then(function(connection) {
+            UserConnections.add(connection);
+            // Send back friend so that client can add to friendList?
+            res.status(200).send(connection);
+          });
 
         }
       });
