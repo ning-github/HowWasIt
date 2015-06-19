@@ -43,18 +43,27 @@
           <div class="col-md-4 friends" ng-controller="FriendsController">
             <h3>Friends</h3>
 
-            <div class='friends-search'>
+            <div>
+              <span>Search your friends</span>
               <form>
-                <input type="text" name="query" ng-model="search">
+                <input type="text" name="friendsFilter" ng-model="friendsFilterForm">
+              </form>
+            </div>
+
+            <div>
+              <span>Find a user</span>
+              <form>
+                <input type="text" name="memberSearch" ng-model="memberSearchForm">
+                <input type="submit" ng-click="searchMembers(memberSearchForm)">
               </form>
             </div>
             
-            <div class='friends-list'>
-              <div ng-repeat='friend in userFriends | filter: search'>
-                <div class:'friend-name'>{{ friend.first_name }} {{ friend.last_name }}</div>
-                <div class:'friend-email'>{{ friend.email }}</div>
-              </div>
-            </div>
+            <ul class="friends-list">
+              <li ng-repeat="friend in userFriends | filter: friendsFilterForm">
+                <div class:"friend-name">{{ friend.first_name }} {{ friend.last_name }}</div>
+                <div class:"friend-email">{{ friend.email }}</div>
+              </li>
+            </ul>
 
           </div>
 
