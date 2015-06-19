@@ -38,3 +38,4 @@ bower_components/
 .flooignore
 
 # conceal API keys
+clientKey.js
