@@ -11,8 +11,10 @@
       <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
       <!-- angular modules -->
       <script src="app/app.js"></script>
+      <script src="app/topfive/topfive.js"></script>
       <script src="app/map/map.js"></script>
       <script src="app/friends/friends.js"></script>
+
     </head>
 
     <body class="container">
@@ -38,7 +40,8 @@
       </nav>
       <div class="main">
         <!-- Map Module -->
-        <div class="col-md-8 map" ng-controller="MapController">
+        <div class="col-md-8 map" ng-controller="MapController"> 
+          SearchBox (eventually move to Add Review) <input id = 'search-box'>
           <div id="map-canvas"></div>
         </div>
         <div class="col-md-4 sidebar">

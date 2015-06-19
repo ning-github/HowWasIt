@@ -20,16 +20,31 @@ angular.module('howWasIt.map', [])
       title: 'test marker 2'
     });
 
-    // attaching data to $scope objec
+    // attaching data to $scope object
     $scope.map = map;
+
+    // handle searches for places
+    var input = document.getElementById('search-box');
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    var searchBox = new google.maps.places.SearchBox(input);
+
+    var markers = [];
+
+    google.maps.event.addListener(searchBox, 'places_changed', function(){
+      var places = searchBox.getPlaces();
+    });
+
+
   };
 
   // for async loading
   var loadScript = function(){
     var script = document.createElement('script');
-    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp' + '&signed_in=true&callback=initialize';
+    script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false?v=3.exp' + '&signed_in=true&callback=initialize';
     document.body.appendChild(script);
   };
+
 
   // invoke
   loadScript();

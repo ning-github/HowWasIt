@@ -5,8 +5,8 @@ angular.module('howWasIt.topfive', [])
 	var getAll = function(){
 		return http$({
 			method: 'GET',
-			url: //path to db
-		});
+			url: 'fillMeIn'//path to db
+		})
 		.then(function(res){
 			return res.data;
 		});
@@ -14,8 +14,8 @@ angular.module('howWasIt.topfive', [])
 
 	return {
       getAll: getAll
-    };
-});
+  };
+})
 
 
 .controller('TopFiveController', function($scope, Reviews){
