@@ -1,4 +1,7 @@
 angular.module('howWasIt.map', [])
+.factory('Map', function(){
+  
+})
 
 .controller('MapController', function($scope){
   window.initialize = function(){
