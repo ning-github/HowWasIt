@@ -20,10 +20,11 @@ angular.module('howWasIt.friends', [])
   $scope.searchMembersResults = [{id: 3, username: 'ningxia', first_name: 'ning', last_name: 'xia'}];
 
   $scope.getFriendList = function() {
+    var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
+
     return $http({
       method: 'GET',
-      // TODO: We will need to add a reference to a session name? cookie? something to id the user.
-      url: '/friends/getFriendList'
+      url: '/friends/getFriendList?user_id=' + userId
     })
     .then(function(resp) {
       // Expect resp.users to be an array of user objects
@@ -36,7 +37,7 @@ angular.module('howWasIt.friends', [])
   $scope.searchMembers = function(query) {
     return $http({
       method: 'GET',
-      url: '/friends/memberSearch'
+      url: '/friends/memberSearch?query=' + query
     })
     .then(function(resp) {
       // Expect resp.users to be an array of user objects
@@ -47,10 +48,11 @@ angular.module('howWasIt.friends', [])
   };
 
   $scope.addFriend = function(userObj) {
+    var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
+    
     return $http({
       method: 'POST',
-      // TODO: We will need to add a reference to a session name? cookie? something to id the user.
-      url: '/friends/addFriend',
+      url: '/friends/addFriend?user_id=' + userId,
       data: userObj
     })
     .then(function(resp) {
@@ -59,10 +61,11 @@ angular.module('howWasIt.friends', [])
   };
 
   $scope.removeFriend = function(userObj) {
+    var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
+    
     return $http({
       method: 'POST',
-      // TODO: We will need to add a reference to a session name? cookie? something to id the user.
-      url: '/friends/removeFriend',
+      url: '/friends/removeFriend?user_id=' + userId,
       data: userObj
     })
     .then(function(resp) {
