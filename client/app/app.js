@@ -1,4 +1,4 @@
 angular.module('howWasIt', [
-  'ui-router',
+  'ui.router',
   'howWasIt.friends'
 ]);

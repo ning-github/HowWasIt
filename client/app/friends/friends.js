@@ -1,7 +1,21 @@
 angular.module('howWasIt.friends', [])
 
-.controller('LinksController', function ($scope, $http, Links) {
-  $scope.userFriends = [];
+.controller('FriendsController', function ($scope, $http) {
+  $scope.userFriends = [
+    // Test Friends, REMOVE AT SOME POINT
+    {id: 1,
+     username: 'brettkan',
+     email: 'abc@gmail.com',
+     first_name: 'brett',
+     last_name: 'kan',
+     password: 'asfd'},
+    {id: 2,
+     username: 'joshturn',
+     email: 'joshturn@gmail.com',
+     first_name: 'josh',
+     last_name: 'turner',
+     password: 'qqqq'},
+  ];
 
   $scope.getFriendList = function() {
     return $http({
@@ -18,19 +32,7 @@ angular.module('howWasIt.friends', [])
 
   };
 
-  // $scope.getLinks = function() {
-  //   Links.getLinks().then(function(data) {
-  //     $scope.data.links = data;
-  //   });
-  // };
 
-  // $scope.init = function() {
-  //   $scope.getLinks();
-  // };
-
-  // $scope.redirectUrl = function(code){
-  //   Links.redirectUrl(code);
-  // };
 
   $scope.getFriendList();
 });

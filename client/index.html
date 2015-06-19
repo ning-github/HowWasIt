@@ -10,6 +10,7 @@
       <script src="bower_components/angular/angular.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
       <script src="app/app.js"></script>
+      <script src="app/friends/friends.js"></script>
     </head>
 
     <body class="container">
@@ -39,11 +40,13 @@
           <div class="col-md-4 top-five">TopFive</div>
 
           <!-- Friends Module -->
-          <div class="col-md-4 friends" ng-controller="LinksController">
+          <div class="col-md-4 friends" ng-controller="FriendsController">
             <h3>Friends</h3>
             
             <div class='friends-list'>
-              <div ng-repeat=''>
+              <div ng-repeat='friend in userFriends'>
+                <div class:'name'>{{ friend.first_name }} {{ friend.last_name }}</div>
+                <div class:'email'>{{ friend.email }}</div>
               </div>
             </div>
 
