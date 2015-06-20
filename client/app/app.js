@@ -4,8 +4,3 @@ angular.module('howWasIt', [
   'howWasIt.topfive',
   'ui.router'
 ]);
-
-/*
-'howWasIt.friends',
-'howWasIt.topfive',
-*/
