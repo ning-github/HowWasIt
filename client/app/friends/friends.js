@@ -15,9 +15,15 @@ angular.module('howWasIt.friends', [])
      first_name: 'josh',
      last_name: 'turner',
      password: 'qqqq'},
+     {id: 3,
+      username: 'ningxia',
+      email: 'ningxia@gmail.com',
+      first_name: 'ning',
+      last_name: 'xia',
+      password: 'abcd'},
   ];
 
-  $scope.searchMembersResults = [{id: 3, username: 'ningxia', first_name: 'ning', last_name: 'xia'}];
+  $scope.searchMembersResults = [{id: 3, username: 'ningxia', email: 'ningxia@gmail.com', first_name: 'ning', last_name: 'xia', password: 'abcd'}];
 
   $scope.getFriendList = function() {
     var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
