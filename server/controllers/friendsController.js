@@ -81,7 +81,7 @@ module.exports = {
         if (!found) {
           res.status(200).send('User is not your friend!');
         } else {
-          found.destroy({where: {user_id: userId, friend_user_id: friendId}}).then(function(connection) {
+          found.where({user_id: userId, friend_user_id: friendId}).destroy().then(function(connection) {
             console.log(connection);
             UserConnections.remove(connection);
             // Send back friend so that client can add to friendList?
