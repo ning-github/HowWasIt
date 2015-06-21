@@ -18,7 +18,7 @@ angular.module('howWasIt.topfive', [])
 })
 
 
-.controller('TopFiveController', function($scope, Reviews){
+.controller('TopFiveController', function($scope, $rootScope, Reviews){
 
 	$scope.data = {};
 
@@ -31,4 +31,7 @@ angular.module('howWasIt.topfive', [])
 		  	console.log
 		  })
 	};
+
+	// test to see that $rootScope successfully shares same Map across diff controllers
+	console.log('rootScope from TopFive: ', $rootScope);
 });
