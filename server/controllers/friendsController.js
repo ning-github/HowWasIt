@@ -17,20 +17,12 @@ module.exports = {
 
       var userId = url.parse(req.url).query.split('=')[1]; // url format: /friends/getFriendList?user_id=123
       
-      var currrentUser = new User({id: userId});
-      currrentUser.fetch({
-        // withRelated: ['UserConnection']
+      User.forge().where({id: userId}).fetch({
+        withRelated: ['friends']
       }).then(function(model) {
-        // console.log('FETCHED MODEL IS HERE: ', model);
-        // console.log('FETCHED MODEL RELATIONS: ', model.related('UserConnections'));
-
+        res.status(200).send(model.related('friends').models);
       });
 
-      // db.Message.findAll({include: [db.User]})
-      //   .complete(function(err, results){
-      //     // optional mapping step
-      //     res.json(results);
-      //   });
     },
     post: function (req, res) {
       // TODO: Fix, for some reason routes.js needs this here.
