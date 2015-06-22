@@ -27,8 +27,8 @@ angular.module('howWasIt.friends', [])
     })
     .then(function(resp) {
       // Expect resp.data to be an array of user objects
+      $scope.searchMembersResults = [];
       resp.data.forEach(function(user) {
-        $scope.searchMembersResults = [];
         $scope.searchMembersResults.push(user);
       });
     });
