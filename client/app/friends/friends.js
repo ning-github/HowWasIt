@@ -45,6 +45,7 @@ angular.module('howWasIt.friends', [])
     .then(function(resp) {
       $scope.searchMembersResults = [];
       console.log(resp.data);
+      $scope.getFriendList();
     });
   };
 
