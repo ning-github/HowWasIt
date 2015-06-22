@@ -2,6 +2,10 @@ var db = require('../db/config');
 var bluebird = require('bluebird');
 var url = require('url');
 
+var User = require('../db/models/user');
+var Users = require('../db/collections/users');
+var Review = require('../db/models/review');
+var Reviews = require('../db/collections/reviews');
 var UserConnection = require('../db/models/userConnection');
 var UserConnections = require('../db/collections/userConnections');
 
@@ -13,6 +17,15 @@ module.exports = {
 
       var userId = url.parse(req.url).query.split('=')[1]; // url format: /friends/getFriendList?user_id=123
       
+      var currrentUser = new User({id: userId});
+      currrentUser.fetch({
+        withRelated: ['UserConnection']
+      }).then(function(model) {
+        console.log('FETCHED MODEL IS HERE: ', model);
+        console.log('FETCHED MODEL RELATIONS: ', model.related('UserConnections'));
+
+      });
+
       // db.Message.findAll({include: [db.User]})
       //   .complete(function(err, results){
       //     // optional mapping step
