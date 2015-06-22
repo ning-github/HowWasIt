@@ -1,6 +1,7 @@
 angular.module('howWasIt.friends', [])
 
-.controller('FriendsController', function ($scope, $http) {
+.controller('FriendsController', function ($scope, $rootScope, $http) {
+  $rootScope.friendMarkers = {};
   $scope.userFriends = [
     // Test Friends, REMOVE AT SOME POINT
     {id: 1,
@@ -98,10 +99,47 @@ angular.module('howWasIt.friends', [])
     });
   };
 
-  $scope.mapUserComments = function(userObj) {
+  $scope.makeMarker = function(place) {
+    var location = {};
+
+    location.marker = new google.maps.Marker({
+      map: $rootScope.map,
+      position: place.position,
+      title: place.title,
+      animation: google.maps.Animation.Drop
+    });
+
+    location.contentString = "<div><h1>" + place.name + "</h1></div>";
+
+    location.infoWindow = new google.maps.InfoWindow({
+      content: location.contentString
+    });
+
+    google.maps.event.addListener(location.marker, "click", function() {
+      location.infoWindow.open($rootScope.map, location.marker);
+    });
+
+    return location;
+  };
+
+  $scope.removeReviews = function() {
+    for (var i = 0; i < $rootScope.friendMarkers.locations.length; i++) {
+      $rootScope.friendMarkers.locations[i].setMap(null);
+    }
+  };
+
+  $scope.addFriendReviews = function(userObj) {
     // TODO: Add function to show just friend's comments on the map
     // TODO: Fix bug so map doesn't show user's comments on 'remove friend' button click
     console.log(userObj);
+
+    $scope.removeReviews();
+
+    $rootScope.friendMarkers.locations = [];
+
+    for (var i = 0; i < userObj.places.length; i++) {
+      $rootScope.friendMarkers.locations.push($scope.makeMarker(userObj.places[i]));
+    }
   };
 
 
