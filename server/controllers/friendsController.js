@@ -19,7 +19,7 @@ module.exports = {
       
       var currrentUser = new User({id: userId});
       currrentUser.fetch({
-        withRelated: ['UserConnection']
+        // withRelated: ['UserConnection']
       }).then(function(model) {
         // console.log('FETCHED MODEL IS HERE: ', model);
         // console.log('FETCHED MODEL RELATIONS: ', model.related('UserConnections'));
