@@ -1,5 +1,8 @@
 angular.module('howWasIt.map', [])
-.factory('Map', function($window, $q){
+.factory('Map', function($window, $q, $http){
+  //TODO: hardcoding user id, need to update with actual user
+  var userId = 1;
+
   var commonMap = function(){
     // the deferred object
     var mapDeferred = $q.defer();
@@ -29,13 +32,32 @@ angular.module('howWasIt.map', [])
     return mapDeferred.promise;
   }; 
 
+  var addReview = function(data) {
+    return $http({
+      method: 'POST',
+      url: '/reviews/handleReviews?user_id=' + userId,
+      data: data
+    });
+  };
+
+  var extractData = function(data) {
+    var result = {};
+
+    result.name = data.name;
+    result.latitude = data.geometry.location.A;
+    result.longitude = data.geometry.location.F;
+    return result;
+  }
+
   return {
-    commonMap: commonMap
+    commonMap: commonMap,
+    addReview: addReview,
+    extractData: extractData
   }
 
 })
 
-.controller('MapController', function($scope, $rootScope, Map){
+.controller('MapController', function($scope, $rootScope, $http, Map){
   $rootScope.map = 0;
   // example options 
   var mapOptions = {
@@ -87,6 +109,12 @@ angular.module('howWasIt.map', [])
         $rootScope.myPlaces[places[0].id] = places[0];
 
         console.log('my own places storage: ', $rootScope.myPlaces);
+
+
+        //Adding data the the server
+
+        Map.addReview(Map.extractData(places[0]));
+
       });
 
   });
