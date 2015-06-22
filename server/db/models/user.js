@@ -9,9 +9,10 @@ var User = db.Model.extend({
     return this.hasMany(Review);
   },
 
-  friend: function() {
-    return this.belongsToMany(User, 'user_connections', 'user_id', "friend_user_id").through(UserConnection);
+  friends: function() {
+    return this.belongsToMany(User, 'user_connections', 'user_id', "friend_user_id");
   }
+
 });
 
 module.exports = User;
