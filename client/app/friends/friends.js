@@ -15,15 +15,41 @@ angular.module('howWasIt.friends', [])
      first_name: 'josh',
      last_name: 'turner',
      password: 'qqqq'},
+     {id: 3,
+      username: 'ningxia',
+      email: 'ningxia@gmail.com',
+      first_name: 'ning',
+      last_name: 'xia',
+      password: 'abcd'}
   ];
 
-  $scope.searchMembersResults = [{id: 3, username: 'ningxia', first_name: 'ning', last_name: 'xia'}];
+  $scope.searchMembersResults = [
+    {id: 1,
+      username: 'brettkan',
+      email: 'abc@gmail.com',
+      first_name: 'brett',
+      last_name: 'kan',
+      password: 'asfd'},
+     {id: 2,
+      username: 'joshturn',
+      email: 'joshturn@gmail.com',
+      first_name: 'josh',
+      last_name: 'turner',
+      password: 'qqqq'},
+      {id: 3,
+       username: 'ningxia',
+       email: 'ningxia@gmail.com',
+       first_name: 'ning',
+       last_name: 'xia',
+       password: 'abcd'}
+  ];
 
   $scope.getFriendList = function() {
+    var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
+
     return $http({
       method: 'GET',
-      // TODO: We will need to add a reference to a session name? cookie? something to id the user.
-      url: '/friends/getFriendList'
+      url: '/friends/getFriendList?user_id=' + userId
     })
     .then(function(resp) {
       // Expect resp.users to be an array of user objects
@@ -36,7 +62,7 @@ angular.module('howWasIt.friends', [])
   $scope.searchMembers = function(query) {
     return $http({
       method: 'GET',
-      url: '/friends/memberSearch'
+      url: '/friends/searchMembers?query=' + query
     })
     .then(function(resp) {
       // Expect resp.users to be an array of user objects
@@ -47,10 +73,11 @@ angular.module('howWasIt.friends', [])
   };
 
   $scope.addFriend = function(userObj) {
+    var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
+    
     return $http({
       method: 'POST',
-      // TODO: We will need to add a reference to a session name? cookie? something to id the user.
-      url: '/friends/addFriend',
+      url: '/friends/addFriend?user_id=' + userId,
       data: userObj
     })
     .then(function(resp) {
@@ -59,10 +86,11 @@ angular.module('howWasIt.friends', [])
   };
 
   $scope.removeFriend = function(userObj) {
+    var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
+    
     return $http({
       method: 'POST',
-      // TODO: We will need to add a reference to a session name? cookie? something to id the user.
-      url: '/friends/removeFriend',
+      url: '/friends/removeFriend?user_id=' + userId,
       data: userObj
     })
     .then(function(resp) {
