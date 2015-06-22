@@ -2,27 +2,7 @@ angular.module('howWasIt.friends', [])
 
 .controller('FriendsController', function ($scope, $rootScope, $http) {
   $rootScope.friendMarkers = {};
-  $scope.userFriends = [
-    // Test Friends, REMOVE AT SOME POINT
-    {id: 1,
-     username: 'brettkan',
-     email: 'abc@gmail.com',
-     first_name: 'brett',
-     last_name: 'kan',
-     password: 'asfd'},
-    {id: 2,
-     username: 'joshturn',
-     email: 'joshturn@gmail.com',
-     first_name: 'josh',
-     last_name: 'turner',
-     password: 'qqqq'},
-     {id: 3,
-      username: 'ningxia',
-      email: 'ningxia@gmail.com',
-      first_name: 'ning',
-      last_name: 'xia',
-      password: 'abcd'}
-  ];
+  $scope.userFriends = {};
 
   $scope.searchMembersResults = [
     {id: 1,
@@ -54,8 +34,8 @@ angular.module('howWasIt.friends', [])
     })
     .then(function(resp) {
       // Expect resp.users to be an array of user objects
-      resp.users.forEach(function(user) {
-        $scope.userFriends.push(user);
+      resp.data.forEach(function(user) {
+        $scope.userFriends[user.id] = user;
       });
     });
   };
@@ -66,7 +46,7 @@ angular.module('howWasIt.friends', [])
       url: '/friends/searchMembers?query=' + query
     })
     .then(function(resp) {
-      // Expect resp.users to be an array of user objects
+      // Expect resp to be an array of user objects
       resp.users.forEach(function(user) {
         $scope.searchMembersResults.push(user);
       });
