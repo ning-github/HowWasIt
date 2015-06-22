@@ -89,8 +89,8 @@ module.exports = {
           found.where({user_id: userId, friend_user_id: friendId}).destroy().then(function(connection) {
             console.log(connection);
             UserConnections.remove(connection);
-            // Send back friend so that client can add to friendList?
-            res.status(200).send(connection);
+            // Send back friend ID so that client can remove friend from friendList
+            res.status(200).send({friendId: friendId});
           });
         }
       });

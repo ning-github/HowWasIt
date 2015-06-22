@@ -75,7 +75,7 @@ angular.module('howWasIt.friends', [])
       data: userObj
     })
     .then(function(resp) {
-      console.log(resp);
+      delete $scope.userFriends[resp.data.friendId];
     });
   };
 
