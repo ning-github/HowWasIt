@@ -39,7 +39,8 @@ db.knex.schema.hasTable('reviews').then(function(exists) {
       review.integer('up_votes', 10);
       review.integer('google_loc_id', 30);
       review.string('google_loc_name', 30);
-      review.string('google_loc_coordinates', 30);
+      review.string('latitude', 30);
+      review.string('longitude', 30);
       review.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
