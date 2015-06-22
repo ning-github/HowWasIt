@@ -3,27 +3,7 @@ angular.module('howWasIt.friends', [])
 .controller('FriendsController', function ($scope, $rootScope, $http) {
   $rootScope.friendMarkers = {};
   $scope.userFriends = {};
-
-  $scope.searchMembersResults = [
-    {id: 1,
-      username: 'brettkan',
-      email: 'abc@gmail.com',
-      first_name: 'brett',
-      last_name: 'kan',
-      password: 'asfd'},
-     {id: 2,
-      username: 'joshturn',
-      email: 'joshturn@gmail.com',
-      first_name: 'josh',
-      last_name: 'turner',
-      password: 'qqqq'},
-      {id: 3,
-       username: 'ningxia',
-       email: 'ningxia@gmail.com',
-       first_name: 'ning',
-       last_name: 'xia',
-       password: 'abcd'}
-  ];
+  $scope.searchMembersResults = [];
 
   $scope.getFriendList = function() {
     var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
@@ -33,7 +13,7 @@ angular.module('howWasIt.friends', [])
       url: '/friends/getFriendList?user_id=' + userId
     })
     .then(function(resp) {
-      // Expect resp.users to be an array of user objects
+      // Expect resp.data to be an array of user objects
       resp.data.forEach(function(user) {
         $scope.userFriends[user.id] = user;
       });
@@ -46,8 +26,9 @@ angular.module('howWasIt.friends', [])
       url: '/friends/searchMembers?query=' + query
     })
     .then(function(resp) {
-      // Expect resp to be an array of user objects
-      resp.users.forEach(function(user) {
+      // Expect resp.data to be an array of user objects
+      resp.data.forEach(function(user) {
+        $scope.searchMembersResults = [];
         $scope.searchMembersResults.push(user);
       });
     });
@@ -62,7 +43,8 @@ angular.module('howWasIt.friends', [])
       data: userObj
     })
     .then(function(resp) {
-      console.log(resp);
+      $scope.searchMembersResults = [];
+      console.log(resp.data);
     });
   };
 

@@ -31,8 +31,6 @@ module.exports = {
 
   searchMembers: {
     get: function (req, res) {
-      console.log('SEARCHMEMBERS FUNCTION HAPPENED, url requested: ', req.url);
-      
       var query = url.parse(req.url).query.split('=')[1]; // url format: /friends/getFriendList?query=123
 
       // Search all substrings of username, first_name, last_name, and email fields
