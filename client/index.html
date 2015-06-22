@@ -68,6 +68,7 @@
                 <input type="submit" ng-click="searchMembers(memberSearchForm)">
 
                 <ul class="search-members-results">
+                  <h4>Search Results</h4>
                   <li ng-repeat="member in searchMembersResults">
                     <div class="member-name">{{ member.first_name }} {{ member.last_name }}</div>
                     <div class="member-email">{{ member.email }}</div>
@@ -80,6 +81,7 @@
             
             <!-- Friends List -->
             <ul class="friends-list">
+              <h4>Friends List</h4>
               <li ng-repeat="friend in userFriends | filter: friendsFilterForm" ng-click="mapUserComments(friend)">
                 <div class="friend-name">{{ friend.first_name }} {{ friend.last_name }}</div>
                 <div class="friend-email">{{ friend.email }}</div>
