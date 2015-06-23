@@ -68,11 +68,11 @@ angular.module('howWasIt.friends', [])
     location.marker = new google.maps.Marker({
       map: $rootScope.map,
       position: new google.maps.LatLng(place.latitude, place.longitude),
-      title: place.name,
+      title: place.google_loc_name,
       animation: google.maps.Animation.Drop
     });
 
-    location.contentString = "<div><h1>" + place.name + "</h1></div>";
+    location.contentString = "<div><h5>" + place.google_loc_name + "</h5></div>";
 
     location.infoWindow = new google.maps.InfoWindow({
       content: location.contentString

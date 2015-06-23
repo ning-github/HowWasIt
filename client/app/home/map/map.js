@@ -98,7 +98,7 @@ angular.module('howWasIt.map', [])
         });
 
         // create review form for that marker
-        var contentString = "<div>How was it? <input type = 'text'></div>";
+        var contentString = "<div>How was it? <input type='text'></div>";
 
         var infoWindow = new google.maps.InfoWindow({
           content: contentString
@@ -113,7 +113,6 @@ angular.module('howWasIt.map', [])
 
         bounds.extend(place.geometry.location);
       }
-
       // TODO: set up form for attaching a review
 
       $rootScope.map.fitBounds(bounds);
