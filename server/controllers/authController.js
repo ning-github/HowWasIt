@@ -1,6 +1,8 @@
 var passport = require('passport');
 var bcrypt = require('bcrypt-node');
 var db = require('../db/config');
+
+var util = require('../config/utils');
 var User = require('../db/models/user');
 var Users = require('../db/collections/users');
 
@@ -12,6 +14,8 @@ module.exports = {
       res.status(400).send('Bad Request');
     },
     post: function (req, res) {
+      passport.authenticate('local');
+
       var username = req.body.username;
       var password = req.body.password;
       User.forge({username: username}).fetch()
@@ -31,6 +35,8 @@ module.exports = {
             //   console.log('THE USER OBJECT RETURNED IS: ', user);
             //   done(null, user.id);
             // });
+
+            util.createSession(req, res, model);
             res.status(200).send("Login successful");
           }
         });
@@ -53,9 +59,11 @@ module.exports = {
         }
         User.forge({username: username, password: hash}).save()
         .then(function(model){
-          passport.serializeUser(function(user, done) {
-            done(null, user.id);
-          });
+          // passport.serializeUser(function(user, done) {
+          //   done(null, user.id);
+          // });
+
+          util.createSession(req, res, model);
           res.status(200).send(model);
         });
       });
@@ -82,8 +90,14 @@ module.exports = {
       res.status(400).send('Bad Request');
     },
     post: function (req, res) {
-      req.logOut();
-      res.send(200);
+      // req.logOut();
+
+      req.session.destroy(function(err) {
+        if (err) {
+          console.log('Error destroying session: ', err);
+          res.status(200).send('Session ended');
+        }
+      });
     }
   }
 
