@@ -67,7 +67,7 @@ module.exports = {
     post: function(){
       res.status(400).send("Bad request");
     }
-  }
+  },
 
   logout: {
     get: function (req, res) {
@@ -75,7 +75,8 @@ module.exports = {
       res.status(400).send('Bad Request');
     },
     post: function (req, res) {
-
+      req.logOut();
+      res.send(200);
     }
   }
 

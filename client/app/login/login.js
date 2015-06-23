@@ -4,13 +4,15 @@ angular.module('howWasIt.login', [])
 
   $scope.loginUser = function() {
     var userObj = {username: $scope.usernameInput, password: $scope.passwordInput};
-    $state.go('home');
     return $http({
       method: 'POST',
       url: '/login',
       data: userObj
-    }).then(function(res){
-      //TODO: finish this function
+    }).success(function(data, status, headers, config){
+      $state.go('home');
+    }).error(function(data, status, headers, config){
+      console.log(data);
+      $state.go('login');
     })
   };
 
