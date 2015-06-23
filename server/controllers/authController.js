@@ -19,14 +19,14 @@ module.exports = {
         if (!model) {
           res.status(401).send("User not found");
         }
-        bcrypt.compare(password, model.get('password'), function(err, res){
+        bcrypt.compare(password, model.get('password'), function(err, result){
           if (err){
             res.status(500).send("Error logging in user");
           }
-          if (res === false){
+          if (result === false){
             res.status(401).send("Incorrect password");
           }
-          if (res === true){
+          if (result === true){
             res.status(200).send("Login successful");
           }
         })

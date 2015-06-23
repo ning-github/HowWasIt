@@ -17,7 +17,7 @@ for (var route in reviewsController) {
 
 for (var route in authController) {
   router.route("/" + route)
-    .get(authController[route].get);
+    .get(authController[route].get)
     .post(authController[route].post);
 }
 
