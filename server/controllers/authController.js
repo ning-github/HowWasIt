@@ -17,7 +17,9 @@ module.exports = {
       var username = req.body.username;
       var password = req.body.password;
       bcrypt.hash(password, null, null, function(err, hash){
-        console.log(hash);
+        if (err){
+          console.log("Error creating user: ", err);
+        }
         User.forge({username: username, password: hash}).save()
         .then(function(model){
           res.status(200).send(model);
