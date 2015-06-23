@@ -5,8 +5,10 @@ angular.module('howWasIt', [
   'howWasIt.map',
   'howWasIt.friends',
   'howWasIt.topfive',
+  'howWasIt.services',
   'ui.router'
 ])
+
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/home");
   $stateProvider
