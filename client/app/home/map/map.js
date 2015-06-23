@@ -75,47 +75,62 @@ angular.module('howWasIt.map', [])
 
     // tie the searchbox to places library
     var input = document.getElementById('search-box');
-    $rootScope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    //$rootScope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     var searchBox = new google.maps.places.SearchBox(input);
 
     google.maps.event.addListener(searchBox, 'places_changed', function() {
-        var places = searchBox.getPlaces();
+      var places = searchBox.getPlaces();
 
-        if (places.length == 0) {
-          return;
-        }
+      if (places.length == 0) {
+        return;
+      }
 
-        var bounds = new google.maps.LatLngBounds();
+      var bounds = new google.maps.LatLngBounds();
 
-        // create a marker
-        for (var i = 0, place; place = places[i]; i++) {
-          var marker = new google.maps.Marker({
-            map: $rootScope.map,
-            title: place.name,
-            position: place.geometry.location
-          });
+      // create a marker
+      for (var i = 0, place; place = places[i]; i++) {
+        var marker = new google.maps.Marker({
+          map: $rootScope.map,
+          title: place.name,
+          position: place.geometry.location
+          // TODO: can have marker store MORE information (such as places' unique ID)
+        });
 
-          bounds.extend(place.geometry.location);
-        }
+        // create review form for that marker
+        var contentString = "<div>How was it? <input type = 'text'></div>";
 
-        // TODO: set up form for attaching a review
+        var infoWindow = new google.maps.InfoWindow({
+          content: contentString
+        });
 
-        $rootScope.map.fitBounds(bounds);
-        console.log('this is a places object: ', places[0]);
+        google.maps.event.addListener(marker, "click", function() {
+          console.log(this);
+          // the this binding means an individual infoWindow per MARKER
+          infoWindow.open($rootScope.map, this);
+          // TODO: USE the text input from line 101 along with other info stored on marker
+        });
 
-        console.log('before: ', $rootScope.myPlaces);
-        // use unique ID to store, since different places could have same name
-        $rootScope.myPlaces[places[0].id] = places[0];
+        bounds.extend(place.geometry.location);
+      }
 
-        console.log('my own places storage: ', $rootScope.myPlaces);
+      // TODO: set up form for attaching a review
+
+      $rootScope.map.fitBounds(bounds);
+      console.log('this is a places object: ', places[0]);
+
+      console.log('before: ', $rootScope.myPlaces);
+      // use unique ID to store, since different places could have same name
+      $rootScope.myPlaces[places[0].id] = places[0];
+
+      console.log('my own places storage: ', $rootScope.myPlaces);
 
 
-        //Adding data the the server
+      //Adding data the the server
 
-        Map.addReview(Map.extractData(places[0]));
+      Map.addReview(Map.extractData(places[0]));
 
-      });
+    });
 
   });
 
