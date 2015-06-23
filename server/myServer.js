@@ -2,6 +2,7 @@ var express = require("express");
 var morgan = require("morgan");
 var parser = require("body-parser");
 var router = require("./routes.js");
+var passport = require("passport");
 
 var db = require('./db/config');
 
