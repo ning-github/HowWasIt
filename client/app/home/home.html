@@ -1,0 +1,57 @@
+<div class="main" ng-controller="HomeController">
+  <!-- Map Module -->
+  <div class="col-md-8 map" ng-controller="MapController"> 
+    SearchBox (eventually move to Add Review) <input id = 'search-box'>
+    <div id="map-canvas"></div>
+  </div>
+
+  <div class="col-md-4 sidebar">
+    <!-- TopFive Module -->
+    <div class="col-md-4 top-five" ng-controller="TopFiveController">TopFive</div>
+
+    <!-- Friends Module -->
+    <div class="col-md-4 friends" ng-controller="FriendsController">
+      <h3>Friends</h3>
+
+      <!-- Friends Filter -->
+      <div>
+        <span>Search your friends</span>
+        <form>
+          <input type="text" name="friendsFilter" ng-model="friendsFilterForm">
+        </form>
+      </div>
+
+      <!-- Member Search -->
+      <div>
+        <span>Find a user</span>
+        <form>
+          <input type="text" name="memberSearch" ng-model="memberSearchForm">
+          <input type="submit" ng-click="searchMembers(memberSearchForm)">
+
+          <ul class="search-members-results">
+            <h4>Search Results</h4>
+            <li ng-repeat="member in searchMembersResults">
+              <div class="member-name">{{ member.first_name }} {{ member.last_name }}</div>
+              <div class="member-email">{{ member.email }}</div>
+              <button ng-click="addFriend(member)">Add Friend</button>
+            </li>
+          </ul>
+
+        </form>
+      </div>
+      
+      <!-- Friends List -->
+      <ul class="friends-list">
+        <h4>Friends List</h4>
+        <li ng-repeat="friend in userFriends | filter: friendsFilterForm" ng-click="mapUserComments(friend)">
+          <div class="friend-name">{{ friend.first_name }} {{ friend.last_name }}</div>
+          <div class="friend-email">{{ friend.email }}</div>
+          <button ng-click="removeFriend(friend)">Remove Friend</button>
+        </li>
+      </ul>
+
+    </div>
+
+
+  </div>
+</div>
