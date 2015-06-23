@@ -13,12 +13,20 @@ module.exports = {
 
   handleReviews: {
     get: function(req, res) {
+      var userId = url.parse(req.url).query.split('=')[1];
 
+      Review.forge().where({user_id: userId}).fetchAll()
+        .then(function(model) {
+        // see user database model 
+        console.log(model);
+        res.status(200).send(model);
+      });
     },
     post: function(req, res) {
       var userId = url.parse(req.url).query.split('=')[1]; // url format: /friends/getFriendList?user_id=123
 
       console.log("*************Review*************");
+      console.log(userId);
       console.log(req.body);
 
       var newReview = new Review({
@@ -28,12 +36,14 @@ module.exports = {
         google_loc_name: req.body.name
       });
 
+      console.log(newReview);
+
       newReview.fetch().then(function(found) {
         if (found) {
           res.status(200).send('You have already reviewed this place!!');
         } else {
           newReview.save().then(function(review) {
-            newReviews.add(review);
+            // newReview.add(review);
             // Send back friend so that client can add to friendList?
             res.status(200).send(review);
           });
