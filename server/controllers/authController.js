@@ -27,10 +27,14 @@ module.exports = {
             res.status(401).send("Incorrect password");
           }
           if (result === true){
+            // passport.serializeUser(function(user, done) {
+            //   console.log('THE USER OBJECT RETURNED IS: ', user);
+            //   done(null, user.id);
+            // });
             res.status(200).send("Login successful");
           }
-        })
-      })
+        });
+      });
       
     }
   },
@@ -49,9 +53,12 @@ module.exports = {
         }
         User.forge({username: username, password: hash}).save()
         .then(function(model){
+          passport.serializeUser(function(user, done) {
+            done(null, user.id);
+          });
           res.status(200).send(model);
-        })
-      })
+        });
+      });
     }
   },
 
@@ -80,5 +87,5 @@ module.exports = {
     }
   }
 
-}
+};
 
