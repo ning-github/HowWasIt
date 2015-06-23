@@ -43,7 +43,7 @@
       <!-- Friends List -->
       <ul class="friends-list">
         <h4>Friends List</h4>
-        <li ng-repeat="friend in userFriends | filter: friendsFilterForm" ng-click="mapUserComments(friend)">
+        <li ng-repeat="friend in userFriends | filter: friendsFilterForm" ng-click="addFriendReviews(friend)">
           <div class="friend-name">{{ friend.first_name }} {{ friend.last_name }}</div>
           <div class="friend-email">{{ friend.email }}</div>
           <button ng-click="removeFriend(friend)">Remove Friend</button>

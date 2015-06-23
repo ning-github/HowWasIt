@@ -67,8 +67,8 @@ angular.module('howWasIt.friends', [])
 
     location.marker = new google.maps.Marker({
       map: $rootScope.map,
-      position: place.position,
-      title: place.title,
+      position: new google.maps.LatLng(place.latitude, place.longitude),
+      title: place.name,
       animation: google.maps.Animation.Drop
     });
 
@@ -94,15 +94,29 @@ angular.module('howWasIt.friends', [])
   $scope.addFriendReviews = function(userObj) {
     // TODO: Add function to show just friend's comments on the map
     // TODO: Fix bug so map doesn't show user's comments on 'remove friend' button click
-    console.log(userObj);
+    // console.log(userObj);
 
-    $scope.removeReviews();
+    // $scope.removeReviews();
 
-    $rootScope.friendMarkers.locations = [];
+    // $rootScope.friendMarkers.locations = [];
 
-    for (var i = 0; i < userObj.places.length; i++) {
-      $rootScope.friendMarkers.locations.push($scope.makeMarker(userObj.places[i]));
-    }
+    // for (var i = 0; i < userObj.places.length; i++) {
+    //   $rootScope.friendMarkers.locations.push($scope.makeMarker(userObj.places[i]));
+    // }
+    var userId = userObj.id;
+
+    return $http({
+      method: 'GET',
+      url: '/reviews/handleReviews?user_id=' + userId
+    })
+    .then(function(resp) {
+      // Expect resp.data to be an array of user objects
+      console.log(resp);
+      resp.data.forEach(function(review) {
+        $scope.makeMarker(review);
+        console.log(review);
+      });
+    });
   };
 
 
