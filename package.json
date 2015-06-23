@@ -10,6 +10,7 @@
     "start": "node server/myServer.js"
   },
   "dependencies": {
+    "bcrypt-node": "^0.1.0",
     "bluebird": "^2.9.30",
     "body-parser": "^1.13.1",
     "bookshelf": "^0.8.1",
