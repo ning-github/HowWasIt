@@ -1,11 +1,41 @@
 <div class="main" ng-controller="HomeController">
   <!-- Map Module -->
   <div class="col-md-8 map" ng-controller="MapController"> 
-    SearchBox (eventually move to Add Review) <input id = 'search-box'>
+    <!-- nav bar that is under MapController -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">HowWasIt</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Add Review <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- bind google search to the dropdown menu -->
+                <li>Location: <input type="text" name="location" id = 'search-box'></li>
+                <li>Review: <input type="text" name="review"></li>
+                <li><input type="submit" value="Submit"></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- where actual map is displayed -->
     <div id="map-canvas"></div>
   </div>
 
+  <!-- Sidebar to hold friends and top five -->
   <div class="col-md-4 sidebar">
+
     <!-- TopFive Module -->
     <div class="col-md-4 top-five" ng-controller="TopFiveController">TopFive</div>
 
@@ -36,7 +66,6 @@
               <button ng-click="addFriend(member)">Add Friend</button>
             </li>
           </ul>
-
         </form>
       </div>
       
@@ -51,7 +80,5 @@
       </ul>
 
     </div>
-
-
   </div>
 </div>
