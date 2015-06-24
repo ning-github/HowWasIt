@@ -1,6 +1,9 @@
 var passport = require('passport');
 var bcrypt = require('bcrypt-node');
 var db = require('../db/config');
+var jwt = require('jwt-simple');
+
+var util = require('../config/utils');
 var User = require('../db/models/user');
 var Users = require('../db/collections/users');
 
@@ -27,10 +30,12 @@ module.exports = {
             res.status(401).send("Incorrect password");
           }
           if (result === true){
-            res.status(200).send("Login successful");
+            console.log("THIS IS THE MODEL: ", model);
+            util.createToken(req, res, model);
+            // res.status(200).send("Login successful");
           }
-        })
-      })
+        });
+      });
       
     }
   },
@@ -41,27 +46,35 @@ module.exports = {
       res.status(400).send('Bad Request');
     },
     post: function (req, res) {
-      var username = req.body.username;
+      var userDetails = {
+        username: req.body.username,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email
+      };
       var password = req.body.password;
       bcrypt.hash(password, null, null, function(err, hash){
         if (err){
           console.log("Error creating user: ", err);
         }
-        User.forge({username: username, password: hash}).save()
+        userDetails.password = hash;
+        User.forge(userDetails).save()
         .then(function(model){
-          res.status(200).send(model);
-        })
-      })
+
+          util.createToken(req, res, model);
+          // res.status(200).send(model);
+        });
+      });
     }
   },
 
   loggedIn: {
     get: function(req, res){
-      if (req.isAuthenticated()){
-        res.status(200).send(req.user);
-      } else {
-        res.status(401).send("User not logged in");
-      }
+      // if (1 === 1){
+      //   res.status(200).send(req.user);
+      // } else {
+      //   res.status(401).send("User not logged in");
+      // }
     },
 
     post: function(){
@@ -75,10 +88,16 @@ module.exports = {
       res.status(400).send('Bad Request');
     },
     post: function (req, res) {
-      req.logOut();
-      res.send(200);
+      // req.logOut();
+
+      req.session.destroy(function(err) {
+        if (err) {
+          console.log('Error destroying session: ', err);
+          res.status(200).send('Session ended');
+        }
+      });
     }
   }
 
-}
+};
 

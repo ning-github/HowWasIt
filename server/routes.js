@@ -1,7 +1,7 @@
 var friendsController = require("./controllers/friendsController");
 var reviewsController = require("./controllers/reviewsController");
-var router = require("express").Router();
 var authController = require("./controllers/authController");
+var router = require("express").Router();
 
 for (var route in friendsController) {
 	router.route("/friends/" + route)

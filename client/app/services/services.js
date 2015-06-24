@@ -1,17 +1,30 @@
 angular.module('howWasIt.services', [])
 
-.service('checkLoggedIn', function($http, $q, $state){
+.factory('AuthFactory', function($http, $q, $state){
   
-  var deferred = $q.defer();
+  var checkLoggedIn = function() {  
+    var deferred = $q.defer();
 
-  $http.get('/loggedIn').success(function(user){
+    $http.get('/loggedIn').success(function(user){
 
-    if (user){
-      deferred.resolve();
-    } else {
-      console.log("You need to log in.");
-      deferred.reject();
-      $state.go('login');
-    }
-  })
+      if (user){
+        deferred.resolve();
+      } else {
+        console.log("You need to log in.");
+        deferred.reject();
+        $state.go('login');
+      }
+    });
+  };
+
+  return {
+    authToken: authToken,
+    checkLoggedIn: checkLoggedIn
+  };
+
 })
+
+.service('Session', function() {
+  this.authToken = '';
+
+});
