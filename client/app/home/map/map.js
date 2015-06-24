@@ -95,21 +95,7 @@ angular.module('howWasIt.map', [])
           map: $rootScope.map,
           title: place.name,
           position: place.geometry.location
-          // TODO: can have marker store MORE information (such as places' unique ID)
-        });
-
-        // create review form for that marker
-        var contentString = "<div>How was it? <input type='text'></div>";
-
-        var infoWindow = new google.maps.InfoWindow({
-          content: contentString
-        });
-
-        google.maps.event.addListener(marker, "click", function() {
-          console.log(this);
-          // the this binding means an individual infoWindow per MARKER
-          infoWindow.open($rootScope.map, this);
-          // TODO: USE the text input from line 101 along with other info stored on marker
+          // can have marker store MORE information (such as places' unique ID)
         });
 
         bounds.extend(place.geometry.location);
