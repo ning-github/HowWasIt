@@ -46,6 +46,7 @@ angular.module('howWasIt.map', [])
     result.name = data.name;
     result.latitude = data.geometry.location.A;
     result.longitude = data.geometry.location.F;
+    result.reviewText = data.reviewText;
     return result;
   }
 
@@ -93,27 +94,13 @@ angular.module('howWasIt.map', [])
         var marker = new google.maps.Marker({
           map: $rootScope.map,
           title: place.name,
-          position: place.geometry.location
-          // TODO: can have marker store MORE information (such as places' unique ID)
-        });
-
-        // create review form for that marker
-        var contentString = "<div>How was it? <input type = 'text'></div>";
-
-        var infoWindow = new google.maps.InfoWindow({
-          content: contentString
-        });
-
-        google.maps.event.addListener(marker, "click", function() {
-          console.log(this);
-          // the this binding means an individual infoWindow per MARKER
-          infoWindow.open($rootScope.map, this);
-          // TODO: USE the text input from line 101 along with other info stored on marker
+          position: place.geometry.location,
+          // can have marker store MORE information (such as places' unique ID)
+          placeId: place.place_id
         });
 
         bounds.extend(place.geometry.location);
       }
-
       // TODO: set up form for attaching a review
 
       $rootScope.map.fitBounds(bounds);
@@ -125,10 +112,15 @@ angular.module('howWasIt.map', [])
 
       console.log('my own places storage: ', $rootScope.myPlaces);
 
-
-      //Adding data the the server
-
-      Map.addReview(Map.extractData(places[0]));
+      //Adding data the the server from nav bar dropdown
+      $scope.reviewSubmit = function(){
+        var reviewText = $scope.reviewText;
+        places[0].reviewText = reviewText;
+        Map.addReview(Map.extractData(places[0]));
+        // clear fields and pop dropdown back up
+        $('.dropdown.open').removeClass('open');
+        $('#search-box, .review-text').val('');
+      }
 
     });
 

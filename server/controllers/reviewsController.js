@@ -39,15 +39,29 @@ module.exports = {
       console.log(newReview);
 
       newReview.fetch().then(function(found) {
+        reviewWithText = new Review({
+          user_id: userId,
+          longitude: req.body.longitude,
+          latitude: req.body.latitude,
+          google_loc_name: req.body.name,
+          review_text: req.body.reviewText
+        });
+        // if this user has already reviewed this place
         if (found) {
-          res.status(200).send('You have already reviewed this place!!');
-        } else {
-          newReview.save().then(function(review) {
-            // newReview.add(review);
-            // Send back friend so that client can add to friendList?
-            res.status(200).send(review);
+          // TODO: alert user they have an old review
+          //remove old review
+          found.destroy().then(function(review) {
+            Reviews.remove(review);
+            console.log('overwritten!');
           });
-        }
+        } 
+        // write the review
+        reviewWithText.save().then(function(review) {
+          // newReview.add(review);
+          // Send back friend so that client can add to friendList?
+          res.status(200).send(review);
+        });
+
       });
 
     }
