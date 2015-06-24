@@ -14,33 +14,30 @@ module.exports = {
       res.status(400).send('Bad Request');
     },
     post: function (req, res) {
-      passport.authenticate('local');
 
-      var username = req.body.username;
-      var password = req.body.password;
-      User.forge({username: username}).fetch()
-      .then(function(model){
-        if (!model) {
-          res.status(401).send("User not found");
-        }
-        bcrypt.compare(password, model.get('password'), function(err, result){
-          if (err){
-            res.status(500).send("Error logging in user");
-          }
-          if (result === false){
-            res.status(401).send("Incorrect password");
-          }
-          if (result === true){
-            // passport.serializeUser(function(user, done) {
-            //   console.log('THE USER OBJECT RETURNED IS: ', user);
-            //   done(null, user.id);
-            // });
+      res.status(200).send("Login successful");
 
-            util.createSession(req, res, model);
-            res.status(200).send("Login successful");
-          }
-        });
-      });
+      // var username = req.body.username;
+      // var password = req.body.password;
+      // User.forge({username: username}).fetch()
+      // .then(function(model){
+      //   if (!model) {
+      //     res.status(401).send("User not found");
+      //   }
+      //   bcrypt.compare(password, model.get('password'), function(err, result){
+      //     if (err){
+      //       res.status(500).send("Error logging in user");
+      //     }
+      //     if (result === false){
+      //       res.status(401).send("Incorrect password");
+      //     }
+      //     if (result === true){
+
+      //       util.createSession(req, res, model);
+      //       res.status(200).send("Login successful");
+      //     }
+      //   });
+      // });
       
     }
   },
@@ -59,9 +56,6 @@ module.exports = {
         }
         User.forge({username: username, password: hash}).save()
         .then(function(model){
-          // passport.serializeUser(function(user, done) {
-          //   done(null, user.id);
-          // });
 
           util.createSession(req, res, model);
           res.status(200).send(model);

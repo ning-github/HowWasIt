@@ -1,7 +1,8 @@
 var friendsController = require("./controllers/friendsController");
 var reviewsController = require("./controllers/reviewsController");
-var router = require("express").Router();
 var authController = require("./controllers/authController");
+var router = require("express").Router();
+var passport = require("passport");
 
 for (var route in friendsController) {
 	router.route("/friends/" + route)
@@ -18,6 +19,7 @@ for (var route in reviewsController) {
 for (var route in authController) {
   router.route("/" + route)
     .get(authController[route].get)
+    .post(passport.authenticate('local', {session: false}))
     .post(authController[route].post);
 }
 

@@ -1,7 +1,8 @@
 var db = require('../config');
 var Review = require('./review.js');
 var UserConnection = require('./userConnection.js');
-//var bcrypt = require('bcrypt');
+var Promise = require("bluebird");
+var bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'));
 
 var User = db.Model.extend({
   tableName: 'users',
@@ -14,15 +15,14 @@ var User = db.Model.extend({
     return this.belongsToMany(User, 'user_connections', 'user_id', 'friend_user_id');
   },
 
-  // validPassword: function(password){
-  //   bcrypt.hash(password, null, null, function(err, hash){
-  //     if (err) { console.log('Error hashing password: ', err); }
-  //     bcrypt.compare(password, hash, function(err, result){
-  //       if (err){ console.log("Error checking password: ", err); }
-  //       return result;
-  //     });
-  //   });
-  // }
+  validPassword: function(password){
+    return bcrypt.hashAsync(password, null, null)
+    .then(function(hash) {
+      return bcrypt.compareAsync(password, hash);
+    }).then(function(result) {
+      return result;
+    });
+  }
 
 });
 
