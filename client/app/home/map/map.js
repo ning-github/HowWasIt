@@ -46,6 +46,7 @@ angular.module('howWasIt.map', [])
     result.name = data.name;
     result.latitude = data.geometry.location.A;
     result.longitude = data.geometry.location.F;
+    result.reviewText = data.reviewText;
     return result;
   }
 
@@ -125,9 +126,12 @@ angular.module('howWasIt.map', [])
       console.log('my own places storage: ', $rootScope.myPlaces);
 
 
-      //Adding data the the server
-
-      Map.addReview(Map.extractData(places[0]));
+      //Adding data the the server from nav bar dropdown
+      $scope.reviewSubmit = function(){
+        var reviewText = $scope.reviewText;
+        places[0].reviewText = reviewText;
+        Map.addReview(Map.extractData(places[0]));
+      }
 
     });
 

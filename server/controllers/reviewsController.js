@@ -33,7 +33,8 @@ module.exports = {
         user_id: userId,
         longitude: req.body.longitude,
         latitude: req.body.latitude,
-        google_loc_name: req.body.name
+        google_loc_name: req.body.name,
+        review_text: req.body.reviewText
       });
 
       console.log(newReview);

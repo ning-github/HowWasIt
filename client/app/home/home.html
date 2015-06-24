@@ -7,19 +7,17 @@
         <div class="navbar-header">
           <a class="navbar-brand" href="#">HowWasIt</a>
         </div>
-
         <ul class="nav navbar-nav">
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Add Review <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <!-- bind google search to the dropdown menu -->
               <li>Location: <input type="text" name="location" id = 'search-box'></li>
-              <li>Review: <input type="text" name="review"></li>
-              <li><input type="submit" value="Submit"></li>
+              <li>Review: <input type="text" name="review" ng-model="reviewText"></li>
+              <li><input type="submit" value="Submit" ng-click='reviewSubmit()'></li>
             </ul>
           </li>
         </ul>
-
       </div>
     </nav>
     <!-- where actual map is displayed -->
