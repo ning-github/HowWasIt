@@ -131,6 +131,9 @@ angular.module('howWasIt.map', [])
         var reviewText = $scope.reviewText;
         places[0].reviewText = reviewText;
         Map.addReview(Map.extractData(places[0]));
+        // clear fields and pop dropdown back up
+        $('.dropdown.open').removeClass('open');
+        $('#search-box, .review-text').val('');
       }
 
     });

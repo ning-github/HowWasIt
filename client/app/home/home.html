@@ -12,9 +12,9 @@
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Add Review <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <!-- bind google search to the dropdown menu -->
-              <li>Location: <input type="text" name="location" id = 'search-box'></li>
-              <li>Review: <input type="text" name="review" ng-model="reviewText"></li>
-              <li><input type="submit" value="Submit" ng-click='reviewSubmit()'></li>
+              <li>Location: <input type="text" name="location" id = "search-box"></li>
+              <li>Review: <input type="text" name="review" ng-model="reviewText" class='review-text'></li>
+              <li><button ng-click='reviewSubmit()'>Submit</button></li>
             </ul>
           </li>
         </ul>
