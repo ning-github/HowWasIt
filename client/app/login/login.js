@@ -12,7 +12,7 @@ angular.module('howWasIt.login', [])
       Session.authToken = data.token;
 
       // TODO: This can be more elegant
-      $http.defaults.headers.common = { 'x-access-token' : data.token };
+      $http.defaults.headers.common.Authorization = 'Bearer ' + data.token;
       $state.go('home');
     }).error(function(data, status, headers, config){
       console.log(data);

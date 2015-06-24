@@ -9,7 +9,7 @@ angular.module('howWasIt', [
   'ui.router'
 ])
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/home");
   $stateProvider
     .state('home', {

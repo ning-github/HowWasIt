@@ -1,6 +1,7 @@
 var db = require('../db/config');
 var bluebird = require('bluebird');
 var url = require('url');
+var jwt = require('jwt-simple');
 
 var User = require('../db/models/user');
 var Users = require('../db/collections/users');
@@ -31,7 +32,7 @@ module.exports = {
 
   searchMembers: {
     get: function (req, res) {
-      console.log("REQUEST HEADERS: ", req.headers);
+      console.log(req.headers);
       var query = url.parse(req.url).query.split('=')[1]; // url format: /friends/getFriendList?query=123
 
       // Search all substrings of username, first_name, last_name, and email fields
