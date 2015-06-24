@@ -30,7 +30,7 @@ module.exports = {
             res.status(401).send("Incorrect password");
           }
           if (result === true){
-
+            console.log("THIS IS THE MODEL: ", model);
             util.createToken(req, res, model);
             // res.status(200).send("Login successful");
           }
@@ -46,13 +46,19 @@ module.exports = {
       res.status(400).send('Bad Request');
     },
     post: function (req, res) {
-      var username = req.body.username;
+      var userDetails = {
+        username: req.body.username,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email
+      };
       var password = req.body.password;
       bcrypt.hash(password, null, null, function(err, hash){
         if (err){
           console.log("Error creating user: ", err);
         }
-        User.forge({username: username, password: hash}).save()
+        userDetails.password = hash;
+        User.forge(userDetails).save()
         .then(function(model){
 
           util.createToken(req, res, model);
@@ -62,18 +68,14 @@ module.exports = {
     }
   },
 
-  checkToken: {
+  loggedIn: {
     get: function(req, res){
-      // var decoded = jwt.decode(token, secret);
-      // console.log(decoded);
+      // if (1 === 1){
+      //   res.status(200).send(req.user);
+      // } else {
+      //   res.status(401).send("User not logged in");
+      // }
     },
-
-    //   if (){
-    //     res.status(200).send(req.user);
-    //   } else {
-    //     res.status(401).send("User not logged in");
-    //   }
-    // },
 
     post: function(){
       res.status(400).send("Bad request");

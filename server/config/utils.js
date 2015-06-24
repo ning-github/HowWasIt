@@ -8,6 +8,7 @@ module.exports = {
     var expires = moment().add(7, 'days').valueOf();
     var token = jwt.encode({
       iss: userModel.attributes.id,
+      name: userModel.attributes.first_name,
       exp: expires
     }, app.app.get('jwtTokenSecret'));
 
@@ -16,13 +17,6 @@ module.exports = {
       expires: expires,
       user: userModel.toJSON()
     });
-  },
-
-  decodeToken: function(req, res, userModel) {
-    var token = req.headers['x-access-token'];
-    var tokenData = jwt.decode(token, app.app.get('jwtTokenSecret'));
-
-    // if (tokenData.iss === )
   }
 
 };
