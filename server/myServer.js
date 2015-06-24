@@ -12,13 +12,16 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     User.forge().where({username: username})
     .fetch().then(function(userModel) {
-      if (!userModel){
-        return done(null, false, {message: "User does not exist."});
-      }
-      if (!userModel.validPassword(password)) {
-        return done(null, false, {message: "Invalid password"});
-      }
-      return done(null, userModel);
+      userModel.validPassword(password, userModel.attributes.password).then(function(correctPassword) {
+
+        if (!userModel){
+          return done(null, false, {message: "User does not exist."});
+        }
+        if (!correctPassword) {
+          return done(null, false, {message: "Invalid password"});
+        }
+        return done(null, userModel);
+      });
     });
   }
 ));

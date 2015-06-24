@@ -15,13 +15,11 @@ var User = db.Model.extend({
     return this.belongsToMany(User, 'user_connections', 'user_id', 'friend_user_id');
   },
 
-  validPassword: function(password){
-    return bcrypt.hashAsync(password, null, null)
-    .then(function(hash) {
-      return bcrypt.compareAsync(password, hash);
-    }).then(function(result) {
-      return result;
-    });
+  validPassword: function(attemptedPassword, storedPassword){
+    return bcrypt.compareAsync(attemptedPassword, storedPassword)
+    // .then(function(result) {
+    //   return result;
+    // });
   }
 
 });
