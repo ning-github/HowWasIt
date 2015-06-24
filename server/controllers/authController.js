@@ -14,9 +14,15 @@ module.exports = {
       res.status(400).send('Bad Request');
     },
     post: function (req, res) {
+      var username = req.body.username;
 
-      res.status(200).send("Login successful");
-
+      User.forge({username: username}).fetch()
+      .then(function(userModel) {
+        
+        util.createToken(req, res, userModel);
+        res.status(200).send("Login successful");
+      });
+      
       // var username = req.body.username;
       // var password = req.body.password;
       // User.forge({username: username}).fetch()
