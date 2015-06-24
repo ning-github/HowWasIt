@@ -114,6 +114,7 @@ angular.module('howWasIt.friends', [])
       console.log(resp);
       resp.data.forEach(function(review) {
         $scope.makeMarker(review);
+        // TODO: place on $rootScope.freindMarkers object
         console.log(review);
       });
     });
