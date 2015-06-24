@@ -1,19 +1,23 @@
 angular.module('howWasIt.login', [])
 
-.controller('LoginController', function ($scope, $http, $state) {
+.controller('LoginController', function ($scope, $http, $state, Session) {
 
   $scope.loginUser = function() {
-    var userObj = {username: $scope.usernameInput, password: $scope.passwordInput};
+    var userObj = {username: $scope.usernameInput, password: $scope.passwordInput, $httpProvider};
     return $http({
       method: 'POST',
       url: '/login',
       data: userObj
     }).success(function(data, status, headers, config){
+      Session.authToken = data.token;
+
+      // TODO: This can be more elegant
+      $httpProvider.defaults.headers.common = { 'x-access-token' : data.token };
       $state.go('home');
     }).error(function(data, status, headers, config){
       console.log(data);
       $state.go('login');
-    })
+    });
   };
 
 });

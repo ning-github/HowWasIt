@@ -1,6 +1,6 @@
 angular.module('howWasIt.services', [])
 
-.service('Authentication', function($http, $q, $state){
+.factory('AuthFactory', function($http, $q, $state){
   
   var checkLoggedIn = function() {  
     var deferred = $q.defer();
@@ -18,7 +18,13 @@ angular.module('howWasIt.services', [])
   };
 
   return {
+    authToken: authToken,
     checkLoggedIn: checkLoggedIn
   };
+
+})
+
+.service('Session', function() {
+  this.authToken = '';
 
 });

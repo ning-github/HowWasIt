@@ -11,7 +11,7 @@ module.exports = {
       exp: expires
     }, 'secretString');
      
-    res.json({
+    res.status(200).json({
       token : token,
       expires: expires,
       user: userModel.toJSON()

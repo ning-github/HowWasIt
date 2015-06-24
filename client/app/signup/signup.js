@@ -13,7 +13,7 @@ angular.module('howWasIt.signup', [])
     .then(function(res){
       $state.go('home');
       console.log(res);
-    })
+    });
   };
 
 

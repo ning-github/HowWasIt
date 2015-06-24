@@ -32,7 +32,7 @@ module.exports = {
           if (result === true){
 
             util.createToken(req, res, model);
-            res.status(200).send("Login successful");
+            // res.status(200).send("Login successful");
           }
         });
       });
@@ -56,7 +56,7 @@ module.exports = {
         .then(function(model){
 
           util.createToken(req, res, model);
-          res.status(200).send(model);
+          // res.status(200).send(model);
         });
       });
     }
