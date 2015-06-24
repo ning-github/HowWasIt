@@ -14,36 +14,36 @@ module.exports = {
       res.status(400).send('Bad Request');
     },
     post: function (req, res) {
-      var username = req.body.username;
 
-      User.forge({username: username}).fetch()
-      .then(function(userModel) {
-        
-        util.createToken(req, res, userModel);
-        res.status(200).send("Login successful");
-      });
-      
-      // var username = req.body.username;
-      // var password = req.body.password;
+      // PASSPORT STUFF
       // User.forge({username: username}).fetch()
-      // .then(function(model){
-      //   if (!model) {
-      //     res.status(401).send("User not found");
-      //   }
-      //   bcrypt.compare(password, model.get('password'), function(err, result){
-      //     if (err){
-      //       res.status(500).send("Error logging in user");
-      //     }
-      //     if (result === false){
-      //       res.status(401).send("Incorrect password");
-      //     }
-      //     if (result === true){
-
-      //       util.createSession(req, res, model);
-      //       res.status(200).send("Login successful");
-      //     }
-      //   });
+      // .then(function(userModel) {
+        
+      //   util.createToken(req, res, userModel);
+      //   res.status(200).send("Login successful");
       // });
+      
+      var username = req.body.username;
+      var password = req.body.password;
+      User.forge({username: username}).fetch()
+      .then(function(model){
+        if (!model) {
+          res.status(401).send("User not found");
+        }
+        bcrypt.compare(password, model.get('password'), function(err, result){
+          if (err){
+            res.status(500).send("Error logging in user");
+          }
+          if (result === false){
+            res.status(401).send("Incorrect password");
+          }
+          if (result === true){
+
+            // util.createSession(req, res, model);
+            res.status(200).send("Login successful");
+          }
+        });
+      });
       
     }
   },
