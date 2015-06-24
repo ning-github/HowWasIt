@@ -1,6 +1,7 @@
 var passport = require('passport');
 var bcrypt = require('bcrypt-node');
 var db = require('../db/config');
+var jwt = require('jwt-simple');
 
 var util = require('../config/utils');
 var User = require('../db/models/user');
@@ -30,7 +31,7 @@ module.exports = {
           }
           if (result === true){
 
-            // util.createSession(req, res, model);
+            util.createToken(req, res, model);
             res.status(200).send("Login successful");
           }
         });
@@ -54,21 +55,25 @@ module.exports = {
         User.forge({username: username, password: hash}).save()
         .then(function(model){
 
-          util.createSession(req, res, model);
+          util.createToken(req, res, model);
           res.status(200).send(model);
         });
       });
     }
   },
 
-  loggedIn: {
+  checkToken: {
     get: function(req, res){
-      if (req.isAuthenticated()){
-        res.status(200).send(req.user);
-      } else {
-        res.status(401).send("User not logged in");
-      }
+      // var decoded = jwt.decode(token, secret);
+      // console.log(decoded);
     },
+
+    //   if (){
+    //     res.status(200).send(req.user);
+    //   } else {
+    //     res.status(401).send("User not logged in");
+    //   }
+    // },
 
     post: function(){
       res.status(400).send("Bad request");

@@ -15,6 +15,7 @@ app.set("port", process.env.PORT || 3000);
 app.use(morgan("dev"));
 app.use(parser.json());
 
+// Hide this
 app.set('jwtTokenSecret', 'secretString');
 
 app.use("/", router);
