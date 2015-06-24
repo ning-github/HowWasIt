@@ -94,8 +94,9 @@ angular.module('howWasIt.map', [])
         var marker = new google.maps.Marker({
           map: $rootScope.map,
           title: place.name,
-          position: place.geometry.location
+          position: place.geometry.location,
           // can have marker store MORE information (such as places' unique ID)
+          placeId: place.place_id
         });
 
         bounds.extend(place.geometry.location);
@@ -110,7 +111,6 @@ angular.module('howWasIt.map', [])
       $rootScope.myPlaces[places[0].id] = places[0];
 
       console.log('my own places storage: ', $rootScope.myPlaces);
-
 
       //Adding data the the server from nav bar dropdown
       $scope.reviewSubmit = function(){
