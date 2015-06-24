@@ -72,7 +72,7 @@ angular.module('howWasIt.friends', [])
       animation: google.maps.Animation.Drop
     });
 
-    location.contentString = "<div><h5>" + place.google_loc_name + "</h5></div>";
+    location.contentString = "<div><h5>" + place.google_loc_name + "</h5><hr><h5>"+place.review_text+"</h5></div>";
 
     location.infoWindow = new google.maps.InfoWindow({
       content: location.contentString
