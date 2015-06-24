@@ -10,12 +10,29 @@
         <ul class="nav navbar-nav">
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Add Review <span class="caret"></span></a>
-            <ul class="dropdown-menu">
+
+            <!-- <ul class="dropdown-menu"> -->
               <!-- bind google search to the dropdown menu -->
-              <li>Location: <input type="text" name="location" id = "search-box"></li>
+<!--               <li>Location: <input type="text" name="location" id = "search-box"></li>
               <li>Review: <input type="text" name="review" ng-model="reviewText" class='review-text'></li>
               <li><button ng-click='reviewSubmit()'>Submit</button></li>
-            </ul>
+            </ul> -->
+
+            <div class="dropdown-menu" ng-submit="reviewSubmit()">
+                <form name="myForm">
+                  <label>
+                    Location: 
+                     <input type="text" name="location" id = "search-box" required>
+                  </label>
+
+                  <label>
+                     Review: <input type="text" name="review" ng-model="reviewText" class='review-text' required>
+                  </label>
+                  <button type='submit'>Submit</button>
+                </form>
+            </div>
+
+
           </li>
         </ul>
       </div>
