@@ -4,12 +4,10 @@ angular.module('howWasIt.services', [])
 
   var setToken = function(token) {
     token = token || localStorageService.get('howWasItJwtToken');
-    $http.defaults.headers.common.Authorization = 'Bearer ' + token;
     localStorageService.set('howWasItJwtToken', token);
   };
 
   var removeToken = function() {
-    delete $http.defaults.headers.common.Authorization;
     localStorageService.remove('howWasItJwtToken');
   };
 
@@ -60,6 +58,25 @@ angular.module('howWasIt.services', [])
     logout: logout
   };
 
+})
+
+.factory('AttachTokens', function (localStorageService) {
+  // this is an $httpInterceptor
+  // its job is to stop all out going request
+  // then look in local storage and find the user's token
+  // then add it to the header so the server can validate the request
+  var attach = {
+    request: function (object) {
+      var jwt = localStorageService.get('howWasItJwtToken');
+      if (jwt) {
+        // Format of header is authorization[Bearer: token]... Required for express-jwt
+        object.headers.Authorization = 'Bearer ' + jwt;
+      }
+      object.headers['Allow-Control-Allow-Origin'] = '*';
+      return object;
+    }
+  };
+  return attach;
 })
 
 .service('Session', function(localStorageService) {
