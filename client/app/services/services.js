@@ -14,12 +14,23 @@ angular.module('howWasIt.services', [])
         $http.defaults.headers.common.Authorization = 'Bearer ' + data.token;
         $state.go('home');
       });
-  }
+  };
+
+  var logout = function() {
+    return $http({
+      method: 'POST',
+      url: '/logout',
+      data: Session
+    }).success(function(data, status, headers, config) {
+      delete $http.defaults.headers.common.Authorization;
+      $state.go('login');
+    });
+  };
 
   // in our app, authentication grants authorization (since permissions all the same)
   var isAuthenticated = function(){
     return !!Session.userId;
-  }
+  };
   
   var checkLoggedIn = function() {  
     var deferred = $q.defer();
@@ -38,6 +49,7 @@ angular.module('howWasIt.services', [])
 
   return {
     checkLoggedIn: checkLoggedIn,
+    isAuthenticated: isAuthenticated,
     loginOrSignUp: loginOrSignUp
   };
 
