@@ -1,6 +1,6 @@
 angular.module('howWasIt.signup', [])
 
-.controller('SignupController', function ($scope, $state, $http) {
+.controller('SignupController', function ($scope, $http, $state, Session) {
 
   $scope.createNewUser = function() {
     var userObj = {
@@ -16,9 +16,14 @@ angular.module('howWasIt.signup', [])
       url: '/signup',
       data: userObj
     })
-    .then(function(res){
+    .success(function(data, status, headers, config){
+      console.log('DATA: ', data);
+      Session.authToken = data.token;
+      // user_id obtained from created token and user model on signup
+      var userId = data.user.id;
+      $http.defaults.headers.common.Authorization = 'Bearer ' + data.token;
+
       $state.go('home');
-      console.log(res);
     });
   };
 

@@ -2,7 +2,7 @@ var db = require('../config');
 var Review = require('./review.js');
 var UserConnection = require('./userConnection.js');
 var Promise = require("bluebird");
-var bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'));
+var bcrypt = Promise.promisifyAll(require('bcrypt-node'));
 
 var User = db.Model.extend({
   tableName: 'users',

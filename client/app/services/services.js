@@ -24,6 +24,7 @@ angular.module('howWasIt.services', [])
 
 })
 
+// TODO: hands/receives from localStorage
 .service('Session', function() {
   this.authToken = '';
 
