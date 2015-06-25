@@ -54,15 +54,25 @@ module.exports = {
       var password = req.body.password;
       bcrypt.hash(password, null, null, function(err, hash){
         if (err){
-          console.log("Error creating user: ", err);
+          console.log("Error hashing password ", err);
         }
         userDetails.password = hash;
-        // creates user
-        User.forge(userDetails).save()
-        .then(function(model){
-          // creates token
-          util.createToken(req, res, model);
-          // res.status(200).send(model);
+        User.forge()
+        .query({where: {username: userDetails.username}, 
+          orWhere: {email: userDetails.email} })
+        .fetch().then(function(found){
+          if (found){
+            res.status(400).send('username and password NOT unique');
+            console.log('must have unique username and email');
+          } else {
+            // creates user
+            User.forge(userDetails).save()
+            .then(function(model){
+              // creates token
+              util.createToken(req, res, model);
+              // res.status(200).send(model);
+            });
+          }
         });
       });
     }
