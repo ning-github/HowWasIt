@@ -4,7 +4,14 @@ angular.module('howWasIt.home', [])
 
   $scope.loggedInUser = Session.firstName;
 
+  $scope.currentUserId = Session.id;
   $scope.logout = function() {
+    for (var i = 0; i < $rootScope.friendMarkers.length; i++) {
+      $rootScope.friendMarkers[i].setMap(null);
+    }
+    for (var i = 0; i < $rootScope.markers.length; i++) {
+      $rootScope.markers[i].setMap(null);
+    };
     AuthFactory.logout();
   };
 
