@@ -5,7 +5,7 @@ var moment = require('moment');
 module.exports = {
 
   createToken: function(req, res, userModel) {
-    var expires = moment().add(7, 'days').valueOf();
+    var expires = moment().subtract(7, 'days').valueOf();
     var token = jwt.encode({
       iss: userModel.attributes.id,
       name: userModel.attributes.first_name,

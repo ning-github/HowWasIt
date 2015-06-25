@@ -1,6 +1,17 @@
 angular.module('howWasIt.services', [])
 
-.factory('AuthFactory', function($http, $q, $state, Session){
+.factory('AuthFactory', function($http, $q, $state, Session, localStorageService){
+
+  var setToken = function(token) {
+    token = token || localStorageService.get('howWasItJwtToken');
+    $http.defaults.headers.common.Authorization = 'Bearer ' + token;
+    localStorageService.set('howWasItJwtToken', token);
+  };
+
+  var removeToken = function() {
+    delete $http.defaults.headers.common.Authorization;
+    localStorageService.remove('howWasItJwtToken');
+  };
 
   var loginOrSignUp = function(userObj, url){
     return $http({
@@ -8,18 +19,16 @@ angular.module('howWasIt.services', [])
         url: '/'+url,
         data: userObj
       }).success(function(data, status, headers, config){
-        console.log('data: ', data);
         Session.create(data.user.id, data.user.first_name, data.user.last_name, data.user.email);
-        // TODO: This can be more elegant
-        $http.defaults.headers.common.Authorization = 'Bearer ' + data.token;
+        setToken(data.token);
         $state.go('home');
       });
-  }
+  };
 
   // in our app, authentication grants authorization (since permissions all the same)
   var isAuthenticated = function(){
     return !!Session.userId;
-  }
+  };
   
   var checkLoggedIn = function() {  
     var deferred = $q.defer();
@@ -36,21 +45,40 @@ angular.module('howWasIt.services', [])
     });
   };
 
+  var logout = function() {
+    Session.destroy();
+    removeToken();
+    $state.go('login');
+  };
+
   return {
+    setToken: setToken,
+    removeToken: removeToken,
     checkLoggedIn: checkLoggedIn,
-    loginOrSignUp: loginOrSignUp
+    isAuthenticated: isAuthenticated,
+    loginOrSignUp: loginOrSignUp,
+    logout: logout
   };
 
 })
 
-// TODO: hands/receives from localStorage
-.service('Session', function() {
+.service('Session', function(localStorageService) {
   // for log in
   this.create = function(userId, firstName, lastName, email){
-    this.id = userId;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
+    console.log('HERE ARE THE DETAILS: ', userId, firstName, lastName, email);
+
+    var userDetails = {
+      id: userId,
+      firstName: firstName,
+      lastName: lastName,
+      email: email
+    };
+
+    for (var key in userDetails) {
+      this[key] = userDetails[key];
+    }
+
+    localStorageService.set('howWasItSession', JSON.stringify(userDetails));
   };
 
   // for log out
@@ -59,6 +87,15 @@ angular.module('howWasIt.services', [])
     this.firstName = null;
     this.lastName = null;
     this.email = null;
+    localStorageService.remove('howWasItSession');
+  };
+
+  this.restoreIfExisting = function() {
+    var stored = localStorageService.get('howWasItSession');
+    if (stored) {
+      var userDetails = JSON.parse(stored);
+      this.create(userDetails.id, userDetails.firstName, userDetails.lastName, userDetails.email);
+    }
   };
 });
 

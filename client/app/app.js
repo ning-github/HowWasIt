@@ -6,6 +6,7 @@ angular.module('howWasIt', [
   'howWasIt.friends',
   'howWasIt.topfive',
   'howWasIt.services',
+  'LocalStorageModule',
   'ui.router'
 ])
 
