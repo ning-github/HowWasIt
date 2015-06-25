@@ -81,24 +81,6 @@ module.exports = {
     post: function(){
       res.status(400).send("Bad request");
     }
-  },
-
-  logout: {
-    get: function (req, res) {
-      // TODO: Fix, for some reason routes.js needs this here.
-      res.status(400).send('Bad Request');
-    },
-    post: function (req, res) {
-      // req.logOut();
-
-      req.session.destroy(function(err) {
-        if (err) {
-          console.log('Error destroying session: ', err);
-          res.status(200).send('Session ended');
-        }
-      });
-    }
   }
-
 };
 

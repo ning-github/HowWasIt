@@ -16,17 +16,6 @@ angular.module('howWasIt.services', [])
       });
   };
 
-  var logout = function() {
-    return $http({
-      method: 'POST',
-      url: '/logout',
-      data: Session
-    }).success(function(data, status, headers, config) {
-      delete $http.defaults.headers.common.Authorization;
-      $state.go('login');
-    });
-  };
-
   // in our app, authentication grants authorization (since permissions all the same)
   var isAuthenticated = function(){
     return !!Session.userId;
@@ -47,10 +36,16 @@ angular.module('howWasIt.services', [])
     });
   };
 
+  var logout = function() {
+    delete $http.defaults.headers.common.Authorization;
+    $state.go('login');
+  };
+
   return {
     checkLoggedIn: checkLoggedIn,
     isAuthenticated: isAuthenticated,
-    loginOrSignUp: loginOrSignUp
+    loginOrSignUp: loginOrSignUp,
+    logout: logout
   };
 
 })

@@ -4,6 +4,7 @@ angular.module('howWasIt.home', [])
 
   $scope.logout = function() {
     Session.destroy();
+    AuthFactory.logout();
   };
 
 });
