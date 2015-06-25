@@ -1,16 +1,12 @@
 angular.module('howWasIt.friends', [])
 
-.controller('FriendsController', function ($scope, $rootScope, $http, Session) {
+.controller('FriendsController', function ($scope, $rootScope, $http) {
   $rootScope.friendMarkers = [];
   $scope.userFriends = {};
   $scope.searchMembersResults = [];
-  console.log(Session.id);
-  var userId = Session.id;
+  var userId = $scope.currentUserId;
 
   $scope.getFriendList = function() {
-    //*************************//
-    //var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
-
     return $http({
       method: 'GET',
       url: '/friends/getFriendList?user_id=' + userId
@@ -38,8 +34,7 @@ angular.module('howWasIt.friends', [])
   };
 
   $scope.addFriend = function(userObj) {
-    //var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
-    
+
     return $http({
       method: 'POST',
       url: '/friends/addFriend?user_id=' + userId,
@@ -53,15 +48,15 @@ angular.module('howWasIt.friends', [])
   };
 
   $scope.removeFriend = function(userObj) {
-    //var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
-    
     return $http({
       method: 'POST',
       url: '/friends/removeFriend?user_id=' + userId,
       data: userObj
     })
     .then(function(resp) {
+      console.log('FRIEND REMOVED: ', $scope.userFriends[resp.data.friendId]);
       delete $scope.userFriends[resp.data.friendId];
+
     });
   };
 
@@ -82,7 +77,6 @@ angular.module('howWasIt.friends', [])
     });
 
     google.maps.event.addListener(location.marker, "click", function() {
-      console.log('I was clicked');  
       location.infoWindow.open($rootScope.map, location.marker);
     });
 
@@ -100,30 +94,18 @@ angular.module('howWasIt.friends', [])
   };
 
   $scope.addFriendReviews = function(userObj) {
-    // TODO: Add function to show just friend's comments on the map
     // TODO: Fix bug so map doesn't show user's comments on 'remove friend' button click
-    // console.log(userObj);
-
-    // $scope.removeReviews();
-
-    // $rootScope.friendMarkers.locations = [];
-
-    // for (var i = 0; i < userObj.places.length; i++) {
-    //   $rootScope.friendMarkers.locations.push($scope.makeMarker(userObj.places[i]));
-    // }
-    userId = userObj.id;
+    friendId = userObj.id;
 
     return $http({
       method: 'GET',
-      url: '/reviews/handleReviews?user_id=' + userId
+      url: '/reviews/handleReviews?user_id=' + friendId
     })
     .then(function(resp) {
-      // Expect resp.data to be an array of user objects
-      console.log(resp);
+      console.log('RESP for addFriend Reviews: ', resp);
       $scope.removeReviews();
       resp.data.forEach(function(review) {
         $scope.makeMarker(review);
-        // TODO: place on $rootScope.freindMarkers object
         console.log(review);
       });
     });
