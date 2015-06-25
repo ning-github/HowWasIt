@@ -1,7 +1,5 @@
 angular.module('howWasIt.map', [])
 .factory('Map', function($window, $q, $http){
-  //TODO: hardcoding user id, need to update with actual user
-  var userId = 1;
 
   var commonMap = function(){
     // the deferred object
@@ -32,7 +30,7 @@ angular.module('howWasIt.map', [])
     return mapDeferred.promise;
   }; 
 
-  var addReview = function(data) {
+  var addReview = function(data, userId) {
     return $http({
       method: 'POST',
       url: '/reviews/handleReviews?user_id=' + userId,
@@ -58,21 +56,24 @@ angular.module('howWasIt.map', [])
 
 })
 
-.controller('MapController', function($scope, $rootScope, $http, Map){
-  $rootScope.map = 0;
-  // example options 
+.controller('ApiLoadController', function($scope, $rootScope, Map){
   var mapOptions = {
     // eventually can geocode for center
     center: {lat: 37.78385, lng: -122.40868},
-    zoom: 8
+    zoom: 16
   };
-
-  // property to hold OWN reviews
-  $rootScope.myPlaces = {};
-
   Map.commonMap().then(function(){
     // $rootScope is shared by all controllers
     $rootScope.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  });
+})
+
+.controller('MapController', function($scope, $rootScope, $http, Map, Session){
+  $rootScope.markers = [];
+
+  // Map.commonMap().then(function(){
+  //   // $rootScope is shared by all controllers
+  //   $rootScope.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
     // tie the searchbox to places library
     var input = document.getElementById('search-box');
@@ -100,23 +101,25 @@ angular.module('howWasIt.map', [])
         });
 
         bounds.extend(place.geometry.location);
+        $rootScope.markers.push(marker);
       }
       // TODO: set up form for attaching a review
 
       $rootScope.map.fitBounds(bounds);
       console.log('this is a places object: ', places[0]);
+      
 
-      console.log('before: ', $rootScope.myPlaces);
-      // use unique ID to store, since different places could have same name
-      $rootScope.myPlaces[places[0].id] = places[0];
+      // console.log('before: ', $rootScope.myPlaces);
+      // // use unique ID to store, since different places could have same name
+      // $rootScope.myPlaces[places[0].id] = places[0];
 
-      console.log('my own places storage: ', $rootScope.myPlaces);
+      console.log('my own markers: ', $rootScope.markers);
 
       //Adding data the the server from nav bar dropdown
       $scope.reviewSubmit = function(){
         var reviewText = $scope.reviewText;
         places[0].reviewText = reviewText;
-        Map.addReview(Map.extractData(places[0]));
+        Map.addReview(Map.extractData(places[0]), Session.id);
         // clear fields and pop dropdown back up
         $('.dropdown.open').removeClass('open');
         $('#search-box, .review-text').val('');
@@ -124,6 +127,6 @@ angular.module('howWasIt.map', [])
 
     });
 
-  });
+  // });
 
 });

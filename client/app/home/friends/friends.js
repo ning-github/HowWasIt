@@ -1,12 +1,15 @@
 angular.module('howWasIt.friends', [])
 
-.controller('FriendsController', function ($scope, $rootScope, $http) {
-  $rootScope.friendMarkers = {};
+.controller('FriendsController', function ($scope, $rootScope, $http, Session) {
+  $rootScope.friendMarkers = [];
   $scope.userFriends = {};
   $scope.searchMembersResults = [];
+  console.log(Session.id);
+  var userId = Session.id;
 
   $scope.getFriendList = function() {
-    var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
+    //*************************//
+    //var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
 
     return $http({
       method: 'GET',
@@ -35,7 +38,7 @@ angular.module('howWasIt.friends', [])
   };
 
   $scope.addFriend = function(userObj) {
-    var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
+    //var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
     
     return $http({
       method: 'POST',
@@ -50,7 +53,7 @@ angular.module('howWasIt.friends', [])
   };
 
   $scope.removeFriend = function(userObj) {
-    var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
+    //var userId = 1;  // TODO: We will need to add a reference to a session name? cookie? something to id the user.
     
     return $http({
       method: 'POST',
@@ -79,16 +82,21 @@ angular.module('howWasIt.friends', [])
     });
 
     google.maps.event.addListener(location.marker, "click", function() {
+      console.log('I was clicked');  
       location.infoWindow.open($rootScope.map, location.marker);
     });
 
+    $rootScope.friendMarkers.push(location.marker);
     return location;
   };
 
   $scope.removeReviews = function() {
-    for (var i = 0; i < $rootScope.friendMarkers.locations.length; i++) {
-      $rootScope.friendMarkers.locations[i].setMap(null);
+    for (var i = 0; i < $rootScope.friendMarkers.length; i++) {
+      $rootScope.friendMarkers[i].setMap(null);
     }
+    for (var i = 0; i < $rootScope.markers.length; i++) {
+      $rootScope.markers[i].setMap(null);
+    };
   };
 
   $scope.addFriendReviews = function(userObj) {
@@ -103,7 +111,7 @@ angular.module('howWasIt.friends', [])
     // for (var i = 0; i < userObj.places.length; i++) {
     //   $rootScope.friendMarkers.locations.push($scope.makeMarker(userObj.places[i]));
     // }
-    var userId = userObj.id;
+    userId = userObj.id;
 
     return $http({
       method: 'GET',
@@ -112,6 +120,7 @@ angular.module('howWasIt.friends', [])
     .then(function(resp) {
       // Expect resp.data to be an array of user objects
       console.log(resp);
+      $scope.removeReviews();
       resp.data.forEach(function(review) {
         $scope.makeMarker(review);
         // TODO: place on $rootScope.freindMarkers object
@@ -119,8 +128,6 @@ angular.module('howWasIt.friends', [])
       });
     });
   };
-
-
 
   $scope.getFriendList();
 });

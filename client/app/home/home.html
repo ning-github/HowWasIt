@@ -1,4 +1,5 @@
 <div class="main" ng-controller="HomeController">
+
   <!-- Map Module -->
   <div class="col-md-8 map" ng-controller="MapController"> 
     <!-- nav bar that is under MapController -->
@@ -10,13 +11,6 @@
         <ul class="nav navbar-nav">
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Add Review <span class="caret"></span></a>
-
-            <!-- <ul class="dropdown-menu"> -->
-              <!-- bind google search to the dropdown menu -->
-<!--               <li>Location: <input type="text" name="location" id = "search-box"></li>
-              <li>Review: <input type="text" name="review" ng-model="reviewText" class='review-text'></li>
-              <li><button ng-click='reviewSubmit()'>Submit</button></li>
-            </ul> -->
 
             <div class="dropdown-menu" ng-submit="reviewSubmit()">
                 <form name="myForm">
@@ -32,7 +26,6 @@
                 </form>
             </div>
 
-
           </li>
           <li>
             <div>Welcome, {{ loggedInUser }}!</div>
@@ -41,8 +34,6 @@
         </ul>
       </div>
     </nav>
-    <!-- where actual map is displayed -->
-    <div id="map-canvas"></div>
   </div>
 
   <!-- Sidebar to hold friends and top five -->
