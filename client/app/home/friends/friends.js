@@ -94,6 +94,9 @@ angular.module('howWasIt.friends', [])
     for (var i = 0; i < $rootScope.friendMarkers.length; i++) {
       $rootScope.friendMarkers[i].setMap(null);
     }
+    for (var i = 0; i < $rootScope.markers.length; i++) {
+      $rootScope.markers[i].setMap(null);
+    };
   };
 
   $scope.addFriendReviews = function(userObj) {

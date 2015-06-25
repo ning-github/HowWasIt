@@ -60,7 +60,7 @@ angular.module('howWasIt.map', [])
   var mapOptions = {
     // eventually can geocode for center
     center: {lat: 37.78385, lng: -122.40868},
-    zoom: 8
+    zoom: 16
   };
   Map.commonMap().then(function(){
     // $rootScope is shared by all controllers
@@ -69,7 +69,7 @@ angular.module('howWasIt.map', [])
 })
 
 .controller('MapController', function($scope, $rootScope, $http, Map, Session){
-  $rootScope.myPlaces = {};
+  $rootScope.markers = [];
 
   // Map.commonMap().then(function(){
   //   // $rootScope is shared by all controllers
@@ -101,17 +101,19 @@ angular.module('howWasIt.map', [])
         });
 
         bounds.extend(place.geometry.location);
+        $rootScope.markers.push(marker);
       }
       // TODO: set up form for attaching a review
 
       $rootScope.map.fitBounds(bounds);
       console.log('this is a places object: ', places[0]);
+      
 
-      console.log('before: ', $rootScope.myPlaces);
-      // use unique ID to store, since different places could have same name
-      $rootScope.myPlaces[places[0].id] = places[0];
+      // console.log('before: ', $rootScope.myPlaces);
+      // // use unique ID to store, since different places could have same name
+      // $rootScope.myPlaces[places[0].id] = places[0];
 
-      console.log('my own places storage: ', $rootScope.myPlaces);
+      console.log('my own markers: ', $rootScope.markers);
 
       //Adding data the the server from nav bar dropdown
       $scope.reviewSubmit = function(){
