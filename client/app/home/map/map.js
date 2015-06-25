@@ -1,8 +1,5 @@
 angular.module('howWasIt.map', [])
 .factory('Map', function($window, $q, $http){
-  //TODO: hardcoding user id, need to update with actual user
-  // ********** //
-  var userId = 1;
 
   var commonMap = function(){
     // the deferred object
@@ -33,7 +30,7 @@ angular.module('howWasIt.map', [])
     return mapDeferred.promise;
   }; 
 
-  var addReview = function(data) {
+  var addReview = function(data, userId) {
     return $http({
       method: 'POST',
       url: '/reviews/handleReviews?user_id=' + userId,
@@ -71,7 +68,7 @@ angular.module('howWasIt.map', [])
   });
 })
 
-.controller('MapController', function($scope, $rootScope, $http, Map){
+.controller('MapController', function($scope, $rootScope, $http, Map, Session){
   $rootScope.myPlaces = {};
 
   // Map.commonMap().then(function(){
@@ -120,7 +117,7 @@ angular.module('howWasIt.map', [])
       $scope.reviewSubmit = function(){
         var reviewText = $scope.reviewText;
         places[0].reviewText = reviewText;
-        Map.addReview(Map.extractData(places[0]));
+        Map.addReview(Map.extractData(places[0]), Session.id);
         // clear fields and pop dropdown back up
         $('.dropdown.open').removeClass('open');
         $('#search-box, .review-text').val('');
