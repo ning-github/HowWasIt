@@ -10,7 +10,7 @@ angular.module('howWasIt', [
   'ui.router'
 ])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise("/login");
   $stateProvider
     .state('home', {
@@ -28,4 +28,6 @@ angular.module('howWasIt', [
       templateUrl: 'app/signup/signup.html',
       controller: 'SignupController'
     });
+
+    $httpProvider.interceptors.push('AttachTokens');
 });
