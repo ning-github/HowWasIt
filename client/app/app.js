@@ -39,7 +39,7 @@ angular.module('howWasIt', [
   // we listen for when angular is trying to change routes
   // when it does change routes, we then look for the token in localstorage
   // and send that token to the server to see if it is a real user or hasn't expired
-  // if it's not valid, we then redirect back to signin/signup
+  // if it's not valid, we then redirect back to login page. the exceptions are when they are trying to go to login or signup
   $rootScope.$on('$stateChangeStart', function (evt, toState, toParams, fromState, fromParams) {
     if (!AuthFactory.isAuthenticated() && toState.url !== '/login' && toState.url !== '/signup') {
       $state.go('login');
