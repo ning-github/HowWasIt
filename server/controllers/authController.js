@@ -58,9 +58,10 @@ module.exports = {
           console.log("Error creating user: ", err);
         }
         userDetails.password = hash;
+        // creates user
         User.forge(userDetails).save()
         .then(function(model){
-
+          // creates token
           util.createToken(req, res, model);
           // res.status(200).send(model);
         });
