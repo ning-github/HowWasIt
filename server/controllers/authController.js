@@ -30,7 +30,6 @@ module.exports = {
             res.status(401).send("Incorrect password");
           }
           if (result === true){
-            console.log("THIS IS THE MODEL: ", model);
             util.createToken(req, res, model);
             // res.status(200).send("Login successful");
           }

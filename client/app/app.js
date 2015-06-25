@@ -6,10 +6,11 @@ angular.module('howWasIt', [
   'howWasIt.friends',
   'howWasIt.topfive',
   'howWasIt.services',
+  'LocalStorageModule',
   'ui.router'
 ])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise("/login");
   $stateProvider
     .state('home', {
