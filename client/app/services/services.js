@@ -25,22 +25,7 @@ angular.module('howWasIt.services', [])
 
   // in our app, authentication grants authorization (since permissions all the same)
   var isAuthenticated = function(){
-    return !!Session.userId;
-  };
-  
-  var checkLoggedIn = function() {  
-    var deferred = $q.defer();
-
-    $http.get('/loggedIn').success(function(user){
-
-      if (user){
-        deferred.resolve();
-      } else {
-        console.log("You need to log in.");
-        deferred.reject();
-        $state.go('login');
-      }
-    });
+    return !!localStorageService.get('howWasItJwtToken');
   };
 
   var logout = function() {
@@ -52,9 +37,8 @@ angular.module('howWasIt.services', [])
   return {
     setToken: setToken,
     removeToken: removeToken,
-    checkLoggedIn: checkLoggedIn,
-    isAuthenticated: isAuthenticated,
     loginOrSignUp: loginOrSignUp,
+    isAuthenticated: isAuthenticated,
     logout: logout
   };
 
