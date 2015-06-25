@@ -19,7 +19,6 @@ angular.module('howWasIt.services', [])
         url: '/'+url,
         data: userObj
       }).success(function(data, status, headers, config){
-        console.log('data: ', data);
         Session.create(data.user.id, data.user.first_name, data.user.last_name, data.user.email);
         setToken(data.token);
         $state.go('home');
@@ -63,14 +62,23 @@ angular.module('howWasIt.services', [])
 
 })
 
-// TODO: hands/receives from localStorage
-.service('Session', function() {
+.service('Session', function(localStorageService) {
   // for log in
   this.create = function(userId, firstName, lastName, email){
-    this.id = userId;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
+    console.log('HERE ARE THE DETAILS: ', userId, firstName, lastName, email);
+
+    var userDetails = {
+      id: userId,
+      firstName: firstName,
+      lastName: lastName,
+      email: email
+    };
+
+    for (var key in userDetails) {
+      this[key] = userDetails[key];
+    }
+
+    localStorageService.set('howWasItSession', JSON.stringify(userDetails));
   };
 
   // for log out
@@ -79,6 +87,15 @@ angular.module('howWasIt.services', [])
     this.firstName = null;
     this.lastName = null;
     this.email = null;
+    localStorageService.remove('howWasItSession');
+  };
+
+  this.restoreIfExisting = function() {
+    var stored = localStorageService.get('howWasItSession');
+    if (stored) {
+      var userDetails = JSON.parse(stored);
+      this.create(userDetails.id, userDetails.firstName, userDetails.lastName, userDetails.email);
+    }
   };
 });
 
