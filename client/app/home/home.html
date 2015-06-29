@@ -1,7 +1,7 @@
 <div class="main" ng-controller="HomeController">
 
   <!-- Map Module -->
-  <div class="col-md-8 map" ng-controller="MapController"> 
+  <div class="map" ng-controller="MapController"> 
     <!-- nav bar that is under MapController -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -35,27 +35,27 @@
       </div>
     </nav>
     
-    <div id='map-canvas'></div>
+    <div id="map-canvas" class="col-md-4"></div>
 
   </div>
 
   <!-- Sidebar to hold friends and top five -->
-  <div class="col-md-4 sidebar">
+<!--   <div class="col-md-4 sidebar"> -->
 
     <!-- TopFive Module -->
-    <div class="col-md-4 top-five" ng-controller="TopFiveController">TopFive</div>
+<!--     <div class="col-md-4 top-five" ng-controller="TopFiveController">TopFive</div> -->
 
     <!-- Friends Module -->
     <div class="col-md-4 friends" ng-controller="FriendsController">
-      <h3>Friends</h3>
+      <!-- <h3>Friends</h3> -->
 
       <!-- Friends Filter -->
-      <div>
+<!--       <div>
         <span>Search your friends</span>
         <form>
           <input type="text" name="friendsFilter" ng-model="friendsFilterForm">
         </form>
-      </div>
+      </div> -->
 
       <!-- Member Search -->
       <div>
@@ -65,7 +65,7 @@
           <input type="submit" ng-click="searchMembers(memberSearchForm)">
 
           <ul class="search-members-results">
-            <h4>Search Results</h4>
+            <!-- <h4>Search Results</h4> -->
             <li ng-repeat="member in searchMembersResults">
               <div class="member-name">{{ member.first_name }} {{ member.last_name }}</div>
               <div class="member-email">{{ member.email }}</div>
@@ -76,8 +76,9 @@
       </div>
       
       <!-- Friends List -->
+      <h3> My Friends</h3>
       <ul class="friends-list">
-        <h4>Friends List</h4>
+        <!-- <h4>Friends List</h4> -->
         <li ng-repeat="friend in userFriends | filter: friendsFilterForm" ng-click="addFriendReviews(friend)">
           <div class="friend-name">{{ friend.first_name }} {{ friend.last_name }}</div>
           <div class="friend-email">{{ friend.email }}</div>
@@ -86,5 +87,5 @@
       </ul>
 
     </div>
-  </div>
+<!--   </div> -->
 </div>
