@@ -25,17 +25,21 @@
                   <button type='submit'>Submit</button>
                 </form>
             </div>
+        </ul>
 
+        <ul class ="nav navbar-nav navbar-right">
+          <li>
+            <a>Welcome, {{ loggedInUser }}!</a>
           </li>
           <li>
-            <div>Welcome, {{ loggedInUser }}!</div>
             <a class="logout" href ng-click="logout()">Log out</a>
           </li>
         </ul>
+
       </div>
     </nav>
     
-    <div id="map-canvas" class="col-md-4"></div>
+    <div id="map-canvas" class="col-md-6"></div>
 
   </div>
 
@@ -46,7 +50,7 @@
 <!--     <div class="col-md-4 top-five" ng-controller="TopFiveController">TopFive</div> -->
 
     <!-- Friends Module -->
-    <div class="col-md-4 friends" ng-controller="FriendsController">
+    <div class="col-md-6 friends" ng-controller="FriendsController">
       <!-- <h3>Friends</h3> -->
 
       <!-- Friends Filter -->
