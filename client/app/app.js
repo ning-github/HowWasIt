@@ -43,6 +43,10 @@ angular.module('howWasIt', [
   $rootScope.$on('$stateChangeStart', function (evt, toState, toParams, fromState, fromParams) {
     if (!AuthFactory.isAuthenticated() && toState.url !== '/login' && toState.url !== '/signup') {
       $state.go('login');
+    } 
+    // redirect to home on every state change when you are already logged in
+    if (AuthFactory.isAuthenticated()){
+      $state.go('home');
     }
   });
 });
