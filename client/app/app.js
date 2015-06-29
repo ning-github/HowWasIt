@@ -45,7 +45,7 @@ angular.module('howWasIt', [
       $state.go('login');
     } 
     // redirect to home on every state change when you are already logged in
-    if (AuthFactory.isAuthenticated()){
+    if (AuthFactory.isAuthenticated() && toState.url !== '/home'){
       $state.go('home');
     }
   });
