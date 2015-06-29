@@ -32,7 +32,7 @@ angular.module('howWasIt', [
     $httpProvider.interceptors.push('AttachTokens');
 })
 
-.run(function ($rootScope, $state, AuthFactory) {
+.run(function ($rootScope, $state, $location, AuthFactory) {
   // here inside the run phase of angular, our services and controllers
   // have just been registered and our app is ready
   // however, we want to make sure the user is authorized
@@ -42,11 +42,14 @@ angular.module('howWasIt', [
   // if it's not valid, we then redirect back to login page. the exceptions are when they are trying to go to login or signup
   $rootScope.$on('$stateChangeStart', function (evt, toState, toParams, fromState, fromParams) {
     if (!AuthFactory.isAuthenticated() && toState.url !== '/login' && toState.url !== '/signup') {
-      $state.go('login');
+      // $state.go('login');
+      $location.path('login');
     } 
     // redirect to home on every state change when you are already logged in
     if (AuthFactory.isAuthenticated() && toState.url !== '/home'){
-      $state.go('home');
+      console.log('already logged in');
+      // $state.go('home');
+      $location.path('/home');
     }
   });
 });
