@@ -48,8 +48,8 @@ angular.module('howWasIt', [
     // redirect to home on every state change when you are already logged in
     if (AuthFactory.isAuthenticated() && toState.url !== '/home'){
       console.log('already logged in');
-      // $state.go('home');
-      $location.path('/home');
+      // TODO: must account for completion of original event BEFORE redirecting. need resolve.
+      $location.path('home');
     }
   });
 });
