@@ -55,6 +55,8 @@ angular.module('howWasIt.friends', [])
     })
     .then(function(resp) {
       console.log('FRIEND REMOVED: ', $scope.userFriends[resp.data.friendId]);
+      // clear markers on map
+      $scope.removeReviews();
       delete $scope.userFriends[resp.data.friendId];
 
     });

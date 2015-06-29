@@ -1,6 +1,8 @@
 #map-canvas {
-  height: 580px;
-  width:900px;
+/*  height: 580px;
+  width:900px;*/
+  width:75%;
+  height:85vh;
 }
 
 input {

@@ -7,6 +7,7 @@ angular.module('howWasIt.login', [])
     AuthFactory.loginOrSignUp(userObj, 'login')
       .error(function(){
         // incorrect login credentials. clear fields to reattempt
+        $scope.failed = true;
         $scope.usernameInput = '';
         $scope.passwordInput = '';
       }); 
