@@ -39,7 +39,7 @@
       </div>
     </nav>
     
-    <div id="map-canvas" class="col-md-6"></div>
+    <div id="map-canvas" class="col-md-10"></div>
 
   </div>
 
@@ -50,7 +50,7 @@
 <!--     <div class="col-md-4 top-five" ng-controller="TopFiveController">TopFive</div> -->
 
     <!-- Friends Module -->
-    <div class="col-md-6 friends" ng-controller="FriendsController">
+    <div class="col-md-2 friends" ng-controller="FriendsController">
       <!-- <h3>Friends</h3> -->
 
       <!-- Friends Filter -->
@@ -83,8 +83,8 @@
       <h3> My Friends</h3>
       <ul class="friends-list">
         <!-- <h4>Friends List</h4> -->
-        <li ng-repeat="friend in userFriends | filter: friendsFilterForm" ng-click="addFriendReviews(friend)">
-          <div class="friend-name">{{ friend.first_name }} {{ friend.last_name }}</div>
+        <li ng-repeat="friend in userFriends | filter: friendsFilterForm">
+          <div class="friend-name" ng-click="addFriendReviews(friend)">{{ friend.first_name }} {{ friend.last_name }}</div>
           <div class="friend-email">{{ friend.email }}</div>
           <button ng-click="removeFriend(friend)">Remove Friend</button>
         </li>
