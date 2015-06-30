@@ -12,7 +12,15 @@ angular.module('howWasIt.signup', [])
     };
     console.log(userObj);
     
-    AuthFactory.loginOrSignUp(userObj, 'signup');
+    AuthFactory.loginOrSignUp(userObj, 'signup')
+      .error(function(){
+        $scope.already = true;
+        $scope.usernameInput = ''; 
+        $scope.passwordInput = ''; 
+        $scope.firstNameInput = '';
+        $scope.lastNameInput = '';
+        $scope.emailInput = '';      
+      });
 
     // return $http({
     //   method: 'POST',

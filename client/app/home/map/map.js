@@ -28,55 +28,59 @@ angular.module('howWasIt.map', [])
 
 .controller('MapController', function($scope, $rootScope, $http, Map, Session){
   $rootScope.markers = [];
-    var mapOptions = {
-      // eventually can geocode for center
-      center: {lat: 37.78385, lng: -122.40868},
-      zoom: 16
-    };
+  var mapOptions = {
+    // eventually can geocode for center
+    center: {lat: 37.78385, lng: -122.40868},
+    zoom: 16
+  };
 
   // create Map
   $rootScope.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-    // tie the searchbox to places library
-    var input = document.getElementById('search-box');
-    //$rootScope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  // tie the searchbox to places library
+  var input = document.getElementById('search-box');
+  //$rootScope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-    var searchBox = new google.maps.places.SearchBox(input);
+  var searchBox = new google.maps.places.SearchBox(input);
 
-    google.maps.event.addListener(searchBox, 'places_changed', function() {
-      var places = searchBox.getPlaces();
+  google.maps.event.addListener(searchBox, 'places_changed', function() {
+    var places = searchBox.getPlaces();
 
-      if (places.length == 0) {
-        return;
-      }
+    if (places.length == 0) {
+      return;
+    }
 
-      var bounds = new google.maps.LatLngBounds();
+    var bounds = new google.maps.LatLngBounds();
 
-      // create a marker
-      for (var i = 0, place; place = places[i]; i++) {
-        var marker = new google.maps.Marker({
-          map: $rootScope.map,
-          title: place.name,
-          position: place.geometry.location,
-          placeId: place.place_id
-        });
+    // create a marker
+    for (var i = 0, place; place = places[i]; i++) {
+      var marker = new google.maps.Marker({
+        map: $rootScope.map,
+        title: place.name,
+        position: place.geometry.location,
+        placeId: place.place_id
+      });
 
-        bounds.extend(place.geometry.location);
-        $rootScope.markers.push(marker);
-      }
+      bounds.extend(place.geometry.location);
+      $rootScope.markers.push(marker);
+    }
+    if (places.length === 1){
+      console.log('ready to review');
+      $rootScope.readyToReview = true;
+    }
 
-      $rootScope.map.fitBounds(bounds);
+    $rootScope.map.fitBounds(bounds);
+    
+    //Adding data the the server from nav bar dropdown
+    $scope.reviewSubmit = function(){
+      var reviewText = $scope.reviewText;
+      places[0].reviewText = reviewText;
+      Map.addReview(Map.extractData(places[0]), Session.id);
+      // clear fields and pop dropdown back up
+      $('.dropdown.open').removeClass('open');
+      $('#search-box, .review-text').val('');
+    }
 
-      //Adding data the the server from nav bar dropdown
-      $scope.reviewSubmit = function(){
-        var reviewText = $scope.reviewText;
-        places[0].reviewText = reviewText;
-        Map.addReview(Map.extractData(places[0]), Session.id);
-        // clear fields and pop dropdown back up
-        $('.dropdown.open').removeClass('open');
-        $('#search-box, .review-text').val('');
-      }
-
-    });
+  });
 
 });
