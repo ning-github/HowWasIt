@@ -20,3 +20,12 @@ input {
 .navbar-default .navbar-nav>li>a {
   color: #ffffff;
 }
+
+button {
+  font-size: 9px;
+  height: 12px;
+}
+
+.friend-li {
+  
+}
