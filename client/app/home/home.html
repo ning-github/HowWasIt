@@ -94,7 +94,6 @@
         <!-- <h4>Friends List</h4> -->
         <li ng-repeat="friend in userFriends | filter: friendsFilterForm">
           <div class="friend-name" ng-click="addFriendReviews(friend)">{{ friend.first_name }} {{ friend.last_name }}</div>
-          <div class="friend-email">{{ friend.email }}</div>
           <button ng-click="removeFriend(friend)">Remove Friend</button>
         </li>
       </ul>
