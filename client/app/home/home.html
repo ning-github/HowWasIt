@@ -80,8 +80,7 @@
           <ul class="search-members-results">
             <!-- <h4>Search Results</h4> -->
             <li ng-repeat="member in searchMembersResults">
-              <div class="member-name">{{ member.first_name }} {{ member.last_name }}</div>
-              <div class="member-email">{{ member.email }}</div>
+              <div class="member-name">{{ member.first_name }}</div>
               <button ng-click="addFriend(member)">Add Friend</button>
             </li>
           </ul>
