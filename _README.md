@@ -1,52 +1,12 @@
 # Project Name
 
-> Pithy project description
+A reviews application for recommending and discovering places ranging from restaurants and bookstores to elementary schools and vacation destinations. HowWasIt allows users to see only the reviews and activities of friends they choose to follow. This filters out the noise created by strangers to deliver only the opinions you value most.
+
+
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Josh Turner
+  - __Scrum Master__: Ning Xia
+  - __Development Team Members__: Brett Kan, Chris Staton
 
-## Table of Contents
-
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Team](#team)
-1. [Contributing](#contributing)
-
-## Usage
-
-> Some usage instructions
-
-## Requirements
-
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
-
-## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-```sh
-sudo npm install -g bower
-npm install
-bower install
-```
-
-### Roadmap
-
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
-
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
