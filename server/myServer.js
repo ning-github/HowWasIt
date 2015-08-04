@@ -16,10 +16,8 @@ app.set("port", process.env.PORT || 3000);
 app.use(morgan("dev"));
 app.use(parser.json());
 
-//TODO: Need to hookup the client here!
 app.use(express.static(__dirname + "/../client"));
 
-// Hide this
 app.set('jwtTokenSecret', 'secretString');
 app.use(expressJWT({ secret: app.get('jwtTokenSecret')}).unless({path: ['/login', '/signup', '/favicon.ico']}));
 
